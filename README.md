@@ -46,15 +46,6 @@ https://developers.eco-movement.com/reference/getting-started-data-api
 
 https://du-portal-ui.dataudveksler.app.vd.dk/data/1096/overview
 
-
-**API endpoint**
-Priser
-https://mobility-prices.ok.dk/api/v1/fuel-prices
-Åbent uden authetication
-
-Ladestationer
-
-
 **Dokumentation**
 https://www.ok.dk/globalassets/pdfer/diverse/offentlig-api-dokumentation.pdf
 
@@ -82,7 +73,6 @@ https://du-portal-ui.dataudveksler.app.vd.dk/data/1035/overview
 | Udbyder | Ladestandere | Dynamiske data | Status |
 |---------|-------------|----------------|--------|
 | Monta | ✅ 3.348 sites, 13.416 EVSEs | ✅ Realtidsstatus pollet | Aktiv |
-| OK a.m.b.a. (brændstof) | ➖ Tankstationer (689) | ✅ Priser opdateret dagligt | Aktiv |
 | OK a.m.b.a. (ladestandere, DATEX II) | ❌ | ❌ | kontaktperson pinget med mail 29-05-2026 https://mail.google.com/mail/u/0/#sent/KtbxLvhRcCFBkgtCtVTWclkRGRQMlTTkmL |
 | Eco-Movement (DATEX II / OCPI) | ❌ | ❌ | Mangler API-token — kontakt sales@eco-movement.com |
 | EDF Danmark (OCPI 2.2.0) | ❌ | ❌ | Mangler credentials — organisationsadgang via du-portal |

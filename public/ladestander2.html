@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ladestandere — Status</title>
+  <script src="https://widget.cdn.septima.dk/latest/widgetapi.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; }
+  </style>
+</head>
+<body>
+  <div id="widget-container" data-widget-url="ladestander2.json"></div>
+  <script>
+    const api = new WidgetAPI(document.getElementById('widget-container'));
+
+    let lastReloadTs = 0;
+    setInterval(async () => {
+      try {
+        const r = await fetch('/api/status-ready').then(r => r.json());
+        if (r.ready && r.ts > lastReloadTs) {
+          lastReloadTs = r.ts;
+          api.reloadLayer('ladestandere');
+        }
+      } catch { /* ignore */ }
+    }, 5000);
+  </script>
+</body>
+</html>

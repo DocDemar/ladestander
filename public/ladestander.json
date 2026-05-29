@@ -1,0 +1,2075 @@
+﻿{
+  "debug": true,
+  "map": { "fullscreen": true,
+    "view": {
+      "zoomLevel": 7,
+      "x": 724406,
+      "y": 6175994
+    },
+    "layer": [
+      {
+        "namedlayer": "#osm"
+      },
+      {
+        "id": "ladestandere",
+        "name": "Alle operatører",
+        "type": "geojson",
+        "features": true,
+        "features_host": "http://localhost:8080/api/rpc/monta_charging_points_bbox?xmin=<%= bbox[0] %>&ymin=<%= bbox[1] %>&xmax=<%= bbox[2] %>&ymax=<%= bbox[3] %>",
+        "features_dataType": "json",
+        "features_type": "Point",
+        "srs": "EPSG:4326",
+        "loadingstrategy": "bbox",
+        "computedProperties": [
+          {
+            "name": "statusColor",
+            "template": "<% if (available_count > 0) { %>rgba(40,167,69,1)<% } else if (occupied_count > 0) { %>rgba(220,53,69,1)<% } else { %>rgba(108,117,125,0.8)<% } %>"
+          },
+          {
+            "name": "statusLabel",
+            "template": "<% if (available_count > 0 || occupied_count > 0) { %><span style='color:#28a745;font-weight:600'><%= available_count %> ledig<%= available_count === 1 ? '' : 'e' %></span> · <span style='color:#dc3545'><%= occupied_count %> optaget</span><% if (out_of_service_count > 0) { %> · <span style='color:#999'><%= out_of_service_count %> ude af drift</span><% } %><% } else { %><span style='color:#999'>Status ukendt</span><% } %>"
+          },
+          {
+            "name": "connectorList",
+            "template": "<% var typeMap={'iec62196T2':'Type 2','chademo':'CHAdeMO','ccs1':'CCS1','ccs2':'CCS2','type1':'Type 1','iec62196T2Combo':'CCS2'}; if(connector_types && connector_types.length){ %><%= connector_types.map(function(t){return typeMap[t]||t}).join(', ') %><% } %>"
+          }
+        ],
+        "features_style": {
+          "symbol": "circle",
+          "radius": 8,
+          "fillcolor": "<%= statusColor %>",
+          "strokecolor": "rgba(255,255,255,0.9)",
+          "strokewidth": 2
+        },
+        "template_info": "<div class='widget-hoverbox-title'><%= site_name %></div><div class='widget-hoverbox-sub'><div><%= address %>, <%= postal_code %> <%= city %></div><% if (operator_name) { %><div>Operatør: <%= operator_name %></div><% } %><div><%= ac_count %> AC · <%= dc_count %> DC · max <%= max_power_kw %> kW</div><% if (connectorList) { %><div>Stik: <%= connectorList %></div><% } %><div style='margin-top:8px;font-size:1em'><%= statusLabel %></div><div style='color:#666;font-size:0.85em;margin-top:2px'><%= evse_count %> ladepunkter i alt</div><% if (last_seen_at) { %><div style='color:#999;font-size:0.8em;margin-top:4px'>Opdateret: <%= last_seen_at %></div><% } %></div>",
+        "layercontrol": true,
+        "visible": false
+      },
+      {
+        "id": "operator_01_norlys",
+        "name": "Norlys (7954)",
+        "type": "geojson",
+        "features": true,
+        "features_host": "http://localhost:8080/api/rpc/monta_charging_points_bbox?xmin=<%= bbox[0] %>&ymin=<%= bbox[1] %>&xmax=<%= bbox[2] %>&ymax=<%= bbox[3] %>",
+        "features_dataType": "json",
+        "features_type": "Point",
+        "srs": "EPSG:4326",
+        "loadingstrategy": "bbox",
+        "computedProperties": [
+          {
+            "name": "statusColor",
+            "template": "<% if (available_count > 0) { %>rgba(40,167,69,1)<% } else if (occupied_count > 0) { %>rgba(220,53,69,1)<% } else { %>rgba(108,117,125,0.8)<% } %>"
+          },
+          {
+            "name": "statusLabel",
+            "template": "<% if (available_count > 0 || occupied_count > 0) { %><span style='color:#28a745;font-weight:600'><%= available_count %> ledig<%= available_count === 1 ? '' : 'e' %></span> · <span style='color:#dc3545'><%= occupied_count %> optaget</span><% if (out_of_service_count > 0) { %> · <span style='color:#999'><%= out_of_service_count %> ude af drift</span><% } %><% } else { %><span style='color:#999'>Status ukendt</span><% } %>"
+          },
+          {
+            "name": "connectorList",
+            "template": "<% var typeMap={'iec62196T2':'Type 2','chademo':'CHAdeMO','ccs1':'CCS1','ccs2':'CCS2','type1':'Type 1','iec62196T2Combo':'CCS2'}; if(connector_types && connector_types.length){ %><%= connector_types.map(function(t){return typeMap[t]||t}).join(', ') %><% } %>"
+          }
+        ],
+        "features_style": {
+          "symbol": "circle",
+          "radius": 8,
+          "fillcolor": "<%= statusColor %>",
+          "strokecolor": "rgba(255,255,255,0.9)",
+          "strokewidth": 2
+        },
+        "template_info": "<div class='widget-hoverbox-title'><%= site_name %></div><div class='widget-hoverbox-sub'><div><%= address %>, <%= postal_code %> <%= city %></div><% if (operator_name) { %><div>Operatør: <%= operator_name %></div><% } %><div><%= ac_count %> AC · <%= dc_count %> DC · max <%= max_power_kw %> kW</div><% if (connectorList) { %><div>Stik: <%= connectorList %></div><% } %><div style='margin-top:8px;font-size:1em'><%= statusLabel %></div><div style='color:#666;font-size:0.85em;margin-top:2px'><%= evse_count %> ladepunkter i alt</div><% if (last_seen_at) { %><div style='color:#999;font-size:0.8em;margin-top:4px'>Opdateret: <%= last_seen_at %></div><% } %></div>",
+        "layercontrol": true,
+        "visible": false,
+        "lazyload": true,
+        "prefilter": [
+          {
+            "name": "operator_name",
+            "op": "=",
+            "val": "Norlys"
+          }
+        ]
+      },
+      {
+        "id": "operator_02_ewii",
+        "name": "EWII (3494)",
+        "type": "geojson",
+        "features": true,
+        "features_host": "http://localhost:8080/api/rpc/monta_charging_points_bbox?xmin=<%= bbox[0] %>&ymin=<%= bbox[1] %>&xmax=<%= bbox[2] %>&ymax=<%= bbox[3] %>",
+        "features_dataType": "json",
+        "features_type": "Point",
+        "srs": "EPSG:4326",
+        "loadingstrategy": "bbox",
+        "computedProperties": [
+          {
+            "name": "statusColor",
+            "template": "<% if (available_count > 0) { %>rgba(40,167,69,1)<% } else if (occupied_count > 0) { %>rgba(220,53,69,1)<% } else { %>rgba(108,117,125,0.8)<% } %>"
+          },
+          {
+            "name": "statusLabel",
+            "template": "<% if (available_count > 0 || occupied_count > 0) { %><span style='color:#28a745;font-weight:600'><%= available_count %> ledig<%= available_count === 1 ? '' : 'e' %></span> · <span style='color:#dc3545'><%= occupied_count %> optaget</span><% if (out_of_service_count > 0) { %> · <span style='color:#999'><%= out_of_service_count %> ude af drift</span><% } %><% } else { %><span style='color:#999'>Status ukendt</span><% } %>"
+          },
+          {
+            "name": "connectorList",
+            "template": "<% var typeMap={'iec62196T2':'Type 2','chademo':'CHAdeMO','ccs1':'CCS1','ccs2':'CCS2','type1':'Type 1','iec62196T2Combo':'CCS2'}; if(connector_types && connector_types.length){ %><%= connector_types.map(function(t){return typeMap[t]||t}).join(', ') %><% } %>"
+          }
+        ],
+        "features_style": {
+          "symbol": "circle",
+          "radius": 8,
+          "fillcolor": "<%= statusColor %>",
+          "strokecolor": "rgba(255,255,255,0.9)",
+          "strokewidth": 2
+        },
+        "template_info": "<div class='widget-hoverbox-title'><%= site_name %></div><div class='widget-hoverbox-sub'><div><%= address %>, <%= postal_code %> <%= city %></div><% if (operator_name) { %><div>Operatør: <%= operator_name %></div><% } %><div><%= ac_count %> AC · <%= dc_count %> DC · max <%= max_power_kw %> kW</div><% if (connectorList) { %><div>Stik: <%= connectorList %></div><% } %><div style='margin-top:8px;font-size:1em'><%= statusLabel %></div><div style='color:#666;font-size:0.85em;margin-top:2px'><%= evse_count %> ladepunkter i alt</div><% if (last_seen_at) { %><div style='color:#999;font-size:0.8em;margin-top:4px'>Opdateret: <%= last_seen_at %></div><% } %></div>",
+        "layercontrol": true,
+        "visible": false,
+        "lazyload": true,
+        "prefilter": [
+          {
+            "name": "operator_name",
+            "op": "=",
+            "val": "EWII"
+          }
+        ]
+      },
+      {
+        "id": "operator_03_nortec_a_s",
+        "name": "Nortec A/S (357)",
+        "type": "geojson",
+        "features": true,
+        "features_host": "http://localhost:8080/api/rpc/monta_charging_points_bbox?xmin=<%= bbox[0] %>&ymin=<%= bbox[1] %>&xmax=<%= bbox[2] %>&ymax=<%= bbox[3] %>",
+        "features_dataType": "json",
+        "features_type": "Point",
+        "srs": "EPSG:4326",
+        "loadingstrategy": "bbox",
+        "computedProperties": [
+          {
+            "name": "statusColor",
+            "template": "<% if (available_count > 0) { %>rgba(40,167,69,1)<% } else if (occupied_count > 0) { %>rgba(220,53,69,1)<% } else { %>rgba(108,117,125,0.8)<% } %>"
+          },
+          {
+            "name": "statusLabel",
+            "template": "<% if (available_count > 0 || occupied_count > 0) { %><span style='color:#28a745;font-weight:600'><%= available_count %> ledig<%= available_count === 1 ? '' : 'e' %></span> · <span style='color:#dc3545'><%= occupied_count %> optaget</span><% if (out_of_service_count > 0) { %> · <span style='color:#999'><%= out_of_service_count %> ude af drift</span><% } %><% } else { %><span style='color:#999'>Status ukendt</span><% } %>"
+          },
+          {
+            "name": "connectorList",
+            "template": "<% var typeMap={'iec62196T2':'Type 2','chademo':'CHAdeMO','ccs1':'CCS1','ccs2':'CCS2','type1':'Type 1','iec62196T2Combo':'CCS2'}; if(connector_types && connector_types.length){ %><%= connector_types.map(function(t){return typeMap[t]||t}).join(', ') %><% } %>"
+          }
+        ],
+        "features_style": {
+          "symbol": "circle",
+          "radius": 8,
+          "fillcolor": "<%= statusColor %>",
+          "strokecolor": "rgba(255,255,255,0.9)",
+          "strokewidth": 2
+        },
+        "template_info": "<div class='widget-hoverbox-title'><%= site_name %></div><div class='widget-hoverbox-sub'><div><%= address %>, <%= postal_code %> <%= city %></div><% if (operator_name) { %><div>Operatør: <%= operator_name %></div><% } %><div><%= ac_count %> AC · <%= dc_count %> DC · max <%= max_power_kw %> kW</div><% if (connectorList) { %><div>Stik: <%= connectorList %></div><% } %><div style='margin-top:8px;font-size:1em'><%= statusLabel %></div><div style='color:#666;font-size:0.85em;margin-top:2px'><%= evse_count %> ladepunkter i alt</div><% if (last_seen_at) { %><div style='color:#999;font-size:0.8em;margin-top:4px'>Opdateret: <%= last_seen_at %></div><% } %></div>",
+        "layercontrol": true,
+        "visible": false,
+        "lazyload": true,
+        "prefilter": [
+          {
+            "name": "operator_name",
+            "op": "=",
+            "val": "Nortec A/S"
+          }
+        ]
+      },
+      {
+        "id": "operator_04_nrgi_erhverv",
+        "name": "NRGi Erhverv (301)",
+        "type": "geojson",
+        "features": true,
+        "features_host": "http://localhost:8080/api/rpc/monta_charging_points_bbox?xmin=<%= bbox[0] %>&ymin=<%= bbox[1] %>&xmax=<%= bbox[2] %>&ymax=<%= bbox[3] %>",
+        "features_dataType": "json",
+        "features_type": "Point",
+        "srs": "EPSG:4326",
+        "loadingstrategy": "bbox",
+        "computedProperties": [
+          {
+            "name": "statusColor",
+            "template": "<% if (available_count > 0) { %>rgba(40,167,69,1)<% } else if (occupied_count > 0) { %>rgba(220,53,69,1)<% } else { %>rgba(108,117,125,0.8)<% } %>"
+          },
+          {
+            "name": "statusLabel",
+            "template": "<% if (available_count > 0 || occupied_count > 0) { %><span style='color:#28a745;font-weight:600'><%= available_count %> ledig<%= available_count === 1 ? '' : 'e' %></span> · <span style='color:#dc3545'><%= occupied_count %> optaget</span><% if (out_of_service_count > 0) { %> · <span style='color:#999'><%= out_of_service_count %> ude af drift</span><% } %><% } else { %><span style='color:#999'>Status ukendt</span><% } %>"
+          },
+          {
+            "name": "connectorList",
+            "template": "<% var typeMap={'iec62196T2':'Type 2','chademo':'CHAdeMO','ccs1':'CCS1','ccs2':'CCS2','type1':'Type 1','iec62196T2Combo':'CCS2'}; if(connector_types && connector_types.length){ %><%= connector_types.map(function(t){return typeMap[t]||t}).join(', ') %><% } %>"
+          }
+        ],
+        "features_style": {
+          "symbol": "circle",
+          "radius": 8,
+          "fillcolor": "<%= statusColor %>",
+          "strokecolor": "rgba(255,255,255,0.9)",
+          "strokewidth": 2
+        },
+        "template_info": "<div class='widget-hoverbox-title'><%= site_name %></div><div class='widget-hoverbox-sub'><div><%= address %>, <%= postal_code %> <%= city %></div><% if (operator_name) { %><div>Operatør: <%= operator_name %></div><% } %><div><%= ac_count %> AC · <%= dc_count %> DC · max <%= max_power_kw %> kW</div><% if (connectorList) { %><div>Stik: <%= connectorList %></div><% } %><div style='margin-top:8px;font-size:1em'><%= statusLabel %></div><div style='color:#666;font-size:0.85em;margin-top:2px'><%= evse_count %> ladepunkter i alt</div><% if (last_seen_at) { %><div style='color:#999;font-size:0.8em;margin-top:4px'>Opdateret: <%= last_seen_at %></div><% } %></div>",
+        "layercontrol": true,
+        "visible": false,
+        "lazyload": true,
+        "prefilter": [
+          {
+            "name": "operator_name",
+            "op": "=",
+            "val": "NRGi Erhverv"
+          }
+        ]
+      },
+      {
+        "id": "operator_05_uno_x_mobility_danmark_a_s",
+        "name": "Uno-X Mobility Danmark A/S (299)",
+        "type": "geojson",
+        "features": true,
+        "features_host": "http://localhost:8080/api/rpc/monta_charging_points_bbox?xmin=<%= bbox[0] %>&ymin=<%= bbox[1] %>&xmax=<%= bbox[2] %>&ymax=<%= bbox[3] %>",
+        "features_dataType": "json",
+        "features_type": "Point",
+        "srs": "EPSG:4326",
+        "loadingstrategy": "bbox",
+        "computedProperties": [
+          {
+            "name": "statusColor",
+            "template": "<% if (available_count > 0) { %>rgba(40,167,69,1)<% } else if (occupied_count > 0) { %>rgba(220,53,69,1)<% } else { %>rgba(108,117,125,0.8)<% } %>"
+          },
+          {
+            "name": "statusLabel",
+            "template": "<% if (available_count > 0 || occupied_count > 0) { %><span style='color:#28a745;font-weight:600'><%= available_count %> ledig<%= available_count === 1 ? '' : 'e' %></span> · <span style='color:#dc3545'><%= occupied_count %> optaget</span><% if (out_of_service_count > 0) { %> · <span style='color:#999'><%= out_of_service_count %> ude af drift</span><% } %><% } else { %><span style='color:#999'>Status ukendt</span><% } %>"
+          },
+          {
+            "name": "connectorList",
+            "template": "<% var typeMap={'iec62196T2':'Type 2','chademo':'CHAdeMO','ccs1':'CCS1','ccs2':'CCS2','type1':'Type 1','iec62196T2Combo':'CCS2'}; if(connector_types && connector_types.length){ %><%= connector_types.map(function(t){return typeMap[t]||t}).join(', ') %><% } %>"
+          }
+        ],
+        "features_style": {
+          "symbol": "circle",
+          "radius": 8,
+          "fillcolor": "<%= statusColor %>",
+          "strokecolor": "rgba(255,255,255,0.9)",
+          "strokewidth": 2
+        },
+        "template_info": "<div class='widget-hoverbox-title'><%= site_name %></div><div class='widget-hoverbox-sub'><div><%= address %>, <%= postal_code %> <%= city %></div><% if (operator_name) { %><div>Operatør: <%= operator_name %></div><% } %><div><%= ac_count %> AC · <%= dc_count %> DC · max <%= max_power_kw %> kW</div><% if (connectorList) { %><div>Stik: <%= connectorList %></div><% } %><div style='margin-top:8px;font-size:1em'><%= statusLabel %></div><div style='color:#666;font-size:0.85em;margin-top:2px'><%= evse_count %> ladepunkter i alt</div><% if (last_seen_at) { %><div style='color:#999;font-size:0.8em;margin-top:4px'>Opdateret: <%= last_seen_at %></div><% } %></div>",
+        "layercontrol": true,
+        "visible": false,
+        "lazyload": true,
+        "prefilter": [
+          {
+            "name": "operator_name",
+            "op": "=",
+            "val": "Uno-X Mobility Danmark A/S"
+          }
+        ]
+      },
+      {
+        "id": "operator_06_ecdrive",
+        "name": "ECdrive (293)",
+        "type": "geojson",
+        "features": true,
+        "features_host": "http://localhost:8080/api/rpc/monta_charging_points_bbox?xmin=<%= bbox[0] %>&ymin=<%= bbox[1] %>&xmax=<%= bbox[2] %>&ymax=<%= bbox[3] %>",
+        "features_dataType": "json",
+        "features_type": "Point",
+        "srs": "EPSG:4326",
+        "loadingstrategy": "bbox",
+        "computedProperties": [
+          {
+            "name": "statusColor",
+            "template": "<% if (available_count > 0) { %>rgba(40,167,69,1)<% } else if (occupied_count > 0) { %>rgba(220,53,69,1)<% } else { %>rgba(108,117,125,0.8)<% } %>"
+          },
+          {
+            "name": "statusLabel",
+            "template": "<% if (available_count > 0 || occupied_count > 0) { %><span style='color:#28a745;font-weight:600'><%= available_count %> ledig<%= available_count === 1 ? '' : 'e' %></span> · <span style='color:#dc3545'><%= occupied_count %> optaget</span><% if (out_of_service_count > 0) { %> · <span style='color:#999'><%= out_of_service_count %> ude af drift</span><% } %><% } else { %><span style='color:#999'>Status ukendt</span><% } %>"
+          },
+          {
+            "name": "connectorList",
+            "template": "<% var typeMap={'iec62196T2':'Type 2','chademo':'CHAdeMO','ccs1':'CCS1','ccs2':'CCS2','type1':'Type 1','iec62196T2Combo':'CCS2'}; if(connector_types && connector_types.length){ %><%= connector_types.map(function(t){return typeMap[t]||t}).join(', ') %><% } %>"
+          }
+        ],
+        "features_style": {
+          "symbol": "circle",
+          "radius": 8,
+          "fillcolor": "<%= statusColor %>",
+          "strokecolor": "rgba(255,255,255,0.9)",
+          "strokewidth": 2
+        },
+        "template_info": "<div class='widget-hoverbox-title'><%= site_name %></div><div class='widget-hoverbox-sub'><div><%= address %>, <%= postal_code %> <%= city %></div><% if (operator_name) { %><div>Operatør: <%= operator_name %></div><% } %><div><%= ac_count %> AC · <%= dc_count %> DC · max <%= max_power_kw %> kW</div><% if (connectorList) { %><div>Stik: <%= connectorList %></div><% } %><div style='margin-top:8px;font-size:1em'><%= statusLabel %></div><div style='color:#666;font-size:0.85em;margin-top:2px'><%= evse_count %> ladepunkter i alt</div><% if (last_seen_at) { %><div style='color:#999;font-size:0.8em;margin-top:4px'>Opdateret: <%= last_seen_at %></div><% } %></div>",
+        "layercontrol": true,
+        "visible": false,
+        "lazyload": true,
+        "prefilter": [
+          {
+            "name": "operator_name",
+            "op": "=",
+            "val": "ECdrive"
+          }
+        ]
+      },
+      {
+        "id": "operator_07_apcoa_parking_danmark_a_s",
+        "name": "Apcoa Parking Danmark A/S (87)",
+        "type": "geojson",
+        "features": true,
+        "features_host": "http://localhost:8080/api/rpc/monta_charging_points_bbox?xmin=<%= bbox[0] %>&ymin=<%= bbox[1] %>&xmax=<%= bbox[2] %>&ymax=<%= bbox[3] %>",
+        "features_dataType": "json",
+        "features_type": "Point",
+        "srs": "EPSG:4326",
+        "loadingstrategy": "bbox",
+        "computedProperties": [
+          {
+            "name": "statusColor",
+            "template": "<% if (available_count > 0) { %>rgba(40,167,69,1)<% } else if (occupied_count > 0) { %>rgba(220,53,69,1)<% } else { %>rgba(108,117,125,0.8)<% } %>"
+          },
+          {
+            "name": "statusLabel",
+            "template": "<% if (available_count > 0 || occupied_count > 0) { %><span style='color:#28a745;font-weight:600'><%= available_count %> ledig<%= available_count === 1 ? '' : 'e' %></span> · <span style='color:#dc3545'><%= occupied_count %> optaget</span><% if (out_of_service_count > 0) { %> · <span style='color:#999'><%= out_of_service_count %> ude af drift</span><% } %><% } else { %><span style='color:#999'>Status ukendt</span><% } %>"
+          },
+          {
+            "name": "connectorList",
+            "template": "<% var typeMap={'iec62196T2':'Type 2','chademo':'CHAdeMO','ccs1':'CCS1','ccs2':'CCS2','type1':'Type 1','iec62196T2Combo':'CCS2'}; if(connector_types && connector_types.length){ %><%= connector_types.map(function(t){return typeMap[t]||t}).join(', ') %><% } %>"
+          }
+        ],
+        "features_style": {
+          "symbol": "circle",
+          "radius": 8,
+          "fillcolor": "<%= statusColor %>",
+          "strokecolor": "rgba(255,255,255,0.9)",
+          "strokewidth": 2
+        },
+        "template_info": "<div class='widget-hoverbox-title'><%= site_name %></div><div class='widget-hoverbox-sub'><div><%= address %>, <%= postal_code %> <%= city %></div><% if (operator_name) { %><div>Operatør: <%= operator_name %></div><% } %><div><%= ac_count %> AC · <%= dc_count %> DC · max <%= max_power_kw %> kW</div><% if (connectorList) { %><div>Stik: <%= connectorList %></div><% } %><div style='margin-top:8px;font-size:1em'><%= statusLabel %></div><div style='color:#666;font-size:0.85em;margin-top:2px'><%= evse_count %> ladepunkter i alt</div><% if (last_seen_at) { %><div style='color:#999;font-size:0.8em;margin-top:4px'>Opdateret: <%= last_seen_at %></div><% } %></div>",
+        "layercontrol": true,
+        "visible": false,
+        "lazyload": true,
+        "prefilter": [
+          {
+            "name": "operator_name",
+            "op": "=",
+            "val": "Apcoa Parking Danmark A/S"
+          }
+        ]
+      },
+      {
+        "id": "operator_08_legoland_aps",
+        "name": "Legoland Aps (82)",
+        "type": "geojson",
+        "features": true,
+        "features_host": "http://localhost:8080/api/rpc/monta_charging_points_bbox?xmin=<%= bbox[0] %>&ymin=<%= bbox[1] %>&xmax=<%= bbox[2] %>&ymax=<%= bbox[3] %>",
+        "features_dataType": "json",
+        "features_type": "Point",
+        "srs": "EPSG:4326",
+        "loadingstrategy": "bbox",
+        "computedProperties": [
+          {
+            "name": "statusColor",
+            "template": "<% if (available_count > 0) { %>rgba(40,167,69,1)<% } else if (occupied_count > 0) { %>rgba(220,53,69,1)<% } else { %>rgba(108,117,125,0.8)<% } %>"
+          },
+          {
+            "name": "statusLabel",
+            "template": "<% if (available_count > 0 || occupied_count > 0) { %><span style='color:#28a745;font-weight:600'><%= available_count %> ledig<%= available_count === 1 ? '' : 'e' %></span> · <span style='color:#dc3545'><%= occupied_count %> optaget</span><% if (out_of_service_count > 0) { %> · <span style='color:#999'><%= out_of_service_count %> ude af drift</span><% } %><% } else { %><span style='color:#999'>Status ukendt</span><% } %>"
+          },
+          {
+            "name": "connectorList",
+            "template": "<% var typeMap={'iec62196T2':'Type 2','chademo':'CHAdeMO','ccs1':'CCS1','ccs2':'CCS2','type1':'Type 1','iec62196T2Combo':'CCS2'}; if(connector_types && connector_types.length){ %><%= connector_types.map(function(t){return typeMap[t]||t}).join(', ') %><% } %>"
+          }
+        ],
+        "features_style": {
+          "symbol": "circle",
+          "radius": 8,
+          "fillcolor": "<%= statusColor %>",
+          "strokecolor": "rgba(255,255,255,0.9)",
+          "strokewidth": 2
+        },
+        "template_info": "<div class='widget-hoverbox-title'><%= site_name %></div><div class='widget-hoverbox-sub'><div><%= address %>, <%= postal_code %> <%= city %></div><% if (operator_name) { %><div>Operatør: <%= operator_name %></div><% } %><div><%= ac_count %> AC · <%= dc_count %> DC · max <%= max_power_kw %> kW</div><% if (connectorList) { %><div>Stik: <%= connectorList %></div><% } %><div style='margin-top:8px;font-size:1em'><%= statusLabel %></div><div style='color:#666;font-size:0.85em;margin-top:2px'><%= evse_count %> ladepunkter i alt</div><% if (last_seen_at) { %><div style='color:#999;font-size:0.8em;margin-top:4px'>Opdateret: <%= last_seen_at %></div><% } %></div>",
+        "layercontrol": true,
+        "visible": false,
+        "lazyload": true,
+        "prefilter": [
+          {
+            "name": "operator_name",
+            "op": "=",
+            "val": "Legoland Aps"
+          }
+        ]
+      },
+      {
+        "id": "operator_09_ampgo_aps",
+        "name": "AmpGo ApS (69)",
+        "type": "geojson",
+        "features": true,
+        "features_host": "http://localhost:8080/api/rpc/monta_charging_points_bbox?xmin=<%= bbox[0] %>&ymin=<%= bbox[1] %>&xmax=<%= bbox[2] %>&ymax=<%= bbox[3] %>",
+        "features_dataType": "json",
+        "features_type": "Point",
+        "srs": "EPSG:4326",
+        "loadingstrategy": "bbox",
+        "computedProperties": [
+          {
+            "name": "statusColor",
+            "template": "<% if (available_count > 0) { %>rgba(40,167,69,1)<% } else if (occupied_count > 0) { %>rgba(220,53,69,1)<% } else { %>rgba(108,117,125,0.8)<% } %>"
+          },
+          {
+            "name": "statusLabel",
+            "template": "<% if (available_count > 0 || occupied_count > 0) { %><span style='color:#28a745;font-weight:600'><%= available_count %> ledig<%= available_count === 1 ? '' : 'e' %></span> · <span style='color:#dc3545'><%= occupied_count %> optaget</span><% if (out_of_service_count > 0) { %> · <span style='color:#999'><%= out_of_service_count %> ude af drift</span><% } %><% } else { %><span style='color:#999'>Status ukendt</span><% } %>"
+          },
+          {
+            "name": "connectorList",
+            "template": "<% var typeMap={'iec62196T2':'Type 2','chademo':'CHAdeMO','ccs1':'CCS1','ccs2':'CCS2','type1':'Type 1','iec62196T2Combo':'CCS2'}; if(connector_types && connector_types.length){ %><%= connector_types.map(function(t){return typeMap[t]||t}).join(', ') %><% } %>"
+          }
+        ],
+        "features_style": {
+          "symbol": "circle",
+          "radius": 8,
+          "fillcolor": "<%= statusColor %>",
+          "strokecolor": "rgba(255,255,255,0.9)",
+          "strokewidth": 2
+        },
+        "template_info": "<div class='widget-hoverbox-title'><%= site_name %></div><div class='widget-hoverbox-sub'><div><%= address %>, <%= postal_code %> <%= city %></div><% if (operator_name) { %><div>Operatør: <%= operator_name %></div><% } %><div><%= ac_count %> AC · <%= dc_count %> DC · max <%= max_power_kw %> kW</div><% if (connectorList) { %><div>Stik: <%= connectorList %></div><% } %><div style='margin-top:8px;font-size:1em'><%= statusLabel %></div><div style='color:#666;font-size:0.85em;margin-top:2px'><%= evse_count %> ladepunkter i alt</div><% if (last_seen_at) { %><div style='color:#999;font-size:0.8em;margin-top:4px'>Opdateret: <%= last_seen_at %></div><% } %></div>",
+        "layercontrol": true,
+        "visible": false,
+        "lazyload": true,
+        "prefilter": [
+          {
+            "name": "operator_name",
+            "op": "=",
+            "val": "AmpGo ApS"
+          }
+        ]
+      },
+      {
+        "id": "operator_10_energi_fyn",
+        "name": "Energi Fyn (55)",
+        "type": "geojson",
+        "features": true,
+        "features_host": "http://localhost:8080/api/rpc/monta_charging_points_bbox?xmin=<%= bbox[0] %>&ymin=<%= bbox[1] %>&xmax=<%= bbox[2] %>&ymax=<%= bbox[3] %>",
+        "features_dataType": "json",
+        "features_type": "Point",
+        "srs": "EPSG:4326",
+        "loadingstrategy": "bbox",
+        "computedProperties": [
+          {
+            "name": "statusColor",
+            "template": "<% if (available_count > 0) { %>rgba(40,167,69,1)<% } else if (occupied_count > 0) { %>rgba(220,53,69,1)<% } else { %>rgba(108,117,125,0.8)<% } %>"
+          },
+          {
+            "name": "statusLabel",
+            "template": "<% if (available_count > 0 || occupied_count > 0) { %><span style='color:#28a745;font-weight:600'><%= available_count %> ledig<%= available_count === 1 ? '' : 'e' %></span> · <span style='color:#dc3545'><%= occupied_count %> optaget</span><% if (out_of_service_count > 0) { %> · <span style='color:#999'><%= out_of_service_count %> ude af drift</span><% } %><% } else { %><span style='color:#999'>Status ukendt</span><% } %>"
+          },
+          {
+            "name": "connectorList",
+            "template": "<% var typeMap={'iec62196T2':'Type 2','chademo':'CHAdeMO','ccs1':'CCS1','ccs2':'CCS2','type1':'Type 1','iec62196T2Combo':'CCS2'}; if(connector_types && connector_types.length){ %><%= connector_types.map(function(t){return typeMap[t]||t}).join(', ') %><% } %>"
+          }
+        ],
+        "features_style": {
+          "symbol": "circle",
+          "radius": 8,
+          "fillcolor": "<%= statusColor %>",
+          "strokecolor": "rgba(255,255,255,0.9)",
+          "strokewidth": 2
+        },
+        "template_info": "<div class='widget-hoverbox-title'><%= site_name %></div><div class='widget-hoverbox-sub'><div><%= address %>, <%= postal_code %> <%= city %></div><% if (operator_name) { %><div>Operatør: <%= operator_name %></div><% } %><div><%= ac_count %> AC · <%= dc_count %> DC · max <%= max_power_kw %> kW</div><% if (connectorList) { %><div>Stik: <%= connectorList %></div><% } %><div style='margin-top:8px;font-size:1em'><%= statusLabel %></div><div style='color:#666;font-size:0.85em;margin-top:2px'><%= evse_count %> ladepunkter i alt</div><% if (last_seen_at) { %><div style='color:#999;font-size:0.8em;margin-top:4px'>Opdateret: <%= last_seen_at %></div><% } %></div>",
+        "layercontrol": true,
+        "visible": false,
+        "lazyload": true,
+        "prefilter": [
+          {
+            "name": "operator_name",
+            "op": "=",
+            "val": "Energi Fyn"
+          }
+        ]
+      },
+      {
+        "id": "operator_11_takecharge_aps",
+        "name": "TakeCHARGE ApS (55)",
+        "type": "geojson",
+        "features": true,
+        "features_host": "http://localhost:8080/api/rpc/monta_charging_points_bbox?xmin=<%= bbox[0] %>&ymin=<%= bbox[1] %>&xmax=<%= bbox[2] %>&ymax=<%= bbox[3] %>",
+        "features_dataType": "json",
+        "features_type": "Point",
+        "srs": "EPSG:4326",
+        "loadingstrategy": "bbox",
+        "computedProperties": [
+          {
+            "name": "statusColor",
+            "template": "<% if (available_count > 0) { %>rgba(40,167,69,1)<% } else if (occupied_count > 0) { %>rgba(220,53,69,1)<% } else { %>rgba(108,117,125,0.8)<% } %>"
+          },
+          {
+            "name": "statusLabel",
+            "template": "<% if (available_count > 0 || occupied_count > 0) { %><span style='color:#28a745;font-weight:600'><%= available_count %> ledig<%= available_count === 1 ? '' : 'e' %></span> · <span style='color:#dc3545'><%= occupied_count %> optaget</span><% if (out_of_service_count > 0) { %> · <span style='color:#999'><%= out_of_service_count %> ude af drift</span><% } %><% } else { %><span style='color:#999'>Status ukendt</span><% } %>"
+          },
+          {
+            "name": "connectorList",
+            "template": "<% var typeMap={'iec62196T2':'Type 2','chademo':'CHAdeMO','ccs1':'CCS1','ccs2':'CCS2','type1':'Type 1','iec62196T2Combo':'CCS2'}; if(connector_types && connector_types.length){ %><%= connector_types.map(function(t){return typeMap[t]||t}).join(', ') %><% } %>"
+          }
+        ],
+        "features_style": {
+          "symbol": "circle",
+          "radius": 8,
+          "fillcolor": "<%= statusColor %>",
+          "strokecolor": "rgba(255,255,255,0.9)",
+          "strokewidth": 2
+        },
+        "template_info": "<div class='widget-hoverbox-title'><%= site_name %></div><div class='widget-hoverbox-sub'><div><%= address %>, <%= postal_code %> <%= city %></div><% if (operator_name) { %><div>Operatør: <%= operator_name %></div><% } %><div><%= ac_count %> AC · <%= dc_count %> DC · max <%= max_power_kw %> kW</div><% if (connectorList) { %><div>Stik: <%= connectorList %></div><% } %><div style='margin-top:8px;font-size:1em'><%= statusLabel %></div><div style='color:#666;font-size:0.85em;margin-top:2px'><%= evse_count %> ladepunkter i alt</div><% if (last_seen_at) { %><div style='color:#999;font-size:0.8em;margin-top:4px'>Opdateret: <%= last_seen_at %></div><% } %></div>",
+        "layercontrol": true,
+        "visible": false,
+        "lazyload": true,
+        "prefilter": [
+          {
+            "name": "operator_name",
+            "op": "=",
+            "val": "TakeCHARGE ApS"
+          }
+        ]
+      },
+      {
+        "id": "operator_12_stella_energy",
+        "name": "Stella Energy (52)",
+        "type": "geojson",
+        "features": true,
+        "features_host": "http://localhost:8080/api/rpc/monta_charging_points_bbox?xmin=<%= bbox[0] %>&ymin=<%= bbox[1] %>&xmax=<%= bbox[2] %>&ymax=<%= bbox[3] %>",
+        "features_dataType": "json",
+        "features_type": "Point",
+        "srs": "EPSG:4326",
+        "loadingstrategy": "bbox",
+        "computedProperties": [
+          {
+            "name": "statusColor",
+            "template": "<% if (available_count > 0) { %>rgba(40,167,69,1)<% } else if (occupied_count > 0) { %>rgba(220,53,69,1)<% } else { %>rgba(108,117,125,0.8)<% } %>"
+          },
+          {
+            "name": "statusLabel",
+            "template": "<% if (available_count > 0 || occupied_count > 0) { %><span style='color:#28a745;font-weight:600'><%= available_count %> ledig<%= available_count === 1 ? '' : 'e' %></span> · <span style='color:#dc3545'><%= occupied_count %> optaget</span><% if (out_of_service_count > 0) { %> · <span style='color:#999'><%= out_of_service_count %> ude af drift</span><% } %><% } else { %><span style='color:#999'>Status ukendt</span><% } %>"
+          },
+          {
+            "name": "connectorList",
+            "template": "<% var typeMap={'iec62196T2':'Type 2','chademo':'CHAdeMO','ccs1':'CCS1','ccs2':'CCS2','type1':'Type 1','iec62196T2Combo':'CCS2'}; if(connector_types && connector_types.length){ %><%= connector_types.map(function(t){return typeMap[t]||t}).join(', ') %><% } %>"
+          }
+        ],
+        "features_style": {
+          "symbol": "circle",
+          "radius": 8,
+          "fillcolor": "<%= statusColor %>",
+          "strokecolor": "rgba(255,255,255,0.9)",
+          "strokewidth": 2
+        },
+        "template_info": "<div class='widget-hoverbox-title'><%= site_name %></div><div class='widget-hoverbox-sub'><div><%= address %>, <%= postal_code %> <%= city %></div><% if (operator_name) { %><div>Operatør: <%= operator_name %></div><% } %><div><%= ac_count %> AC · <%= dc_count %> DC · max <%= max_power_kw %> kW</div><% if (connectorList) { %><div>Stik: <%= connectorList %></div><% } %><div style='margin-top:8px;font-size:1em'><%= statusLabel %></div><div style='color:#666;font-size:0.85em;margin-top:2px'><%= evse_count %> ladepunkter i alt</div><% if (last_seen_at) { %><div style='color:#999;font-size:0.8em;margin-top:4px'>Opdateret: <%= last_seen_at %></div><% } %></div>",
+        "layercontrol": true,
+        "visible": false,
+        "lazyload": true,
+        "prefilter": [
+          {
+            "name": "operator_name",
+            "op": "=",
+            "val": "Stella Energy"
+          }
+        ]
+      },
+      {
+        "id": "operator_13_monta",
+        "name": "Monta (45)",
+        "type": "geojson",
+        "features": true,
+        "features_host": "http://localhost:8080/api/rpc/monta_charging_points_bbox?xmin=<%= bbox[0] %>&ymin=<%= bbox[1] %>&xmax=<%= bbox[2] %>&ymax=<%= bbox[3] %>",
+        "features_dataType": "json",
+        "features_type": "Point",
+        "srs": "EPSG:4326",
+        "loadingstrategy": "bbox",
+        "computedProperties": [
+          {
+            "name": "statusColor",
+            "template": "<% if (available_count > 0) { %>rgba(40,167,69,1)<% } else if (occupied_count > 0) { %>rgba(220,53,69,1)<% } else { %>rgba(108,117,125,0.8)<% } %>"
+          },
+          {
+            "name": "statusLabel",
+            "template": "<% if (available_count > 0 || occupied_count > 0) { %><span style='color:#28a745;font-weight:600'><%= available_count %> ledig<%= available_count === 1 ? '' : 'e' %></span> · <span style='color:#dc3545'><%= occupied_count %> optaget</span><% if (out_of_service_count > 0) { %> · <span style='color:#999'><%= out_of_service_count %> ude af drift</span><% } %><% } else { %><span style='color:#999'>Status ukendt</span><% } %>"
+          },
+          {
+            "name": "connectorList",
+            "template": "<% var typeMap={'iec62196T2':'Type 2','chademo':'CHAdeMO','ccs1':'CCS1','ccs2':'CCS2','type1':'Type 1','iec62196T2Combo':'CCS2'}; if(connector_types && connector_types.length){ %><%= connector_types.map(function(t){return typeMap[t]||t}).join(', ') %><% } %>"
+          }
+        ],
+        "features_style": {
+          "symbol": "circle",
+          "radius": 8,
+          "fillcolor": "<%= statusColor %>",
+          "strokecolor": "rgba(255,255,255,0.9)",
+          "strokewidth": 2
+        },
+        "template_info": "<div class='widget-hoverbox-title'><%= site_name %></div><div class='widget-hoverbox-sub'><div><%= address %>, <%= postal_code %> <%= city %></div><% if (operator_name) { %><div>Operatør: <%= operator_name %></div><% } %><div><%= ac_count %> AC · <%= dc_count %> DC · max <%= max_power_kw %> kW</div><% if (connectorList) { %><div>Stik: <%= connectorList %></div><% } %><div style='margin-top:8px;font-size:1em'><%= statusLabel %></div><div style='color:#666;font-size:0.85em;margin-top:2px'><%= evse_count %> ladepunkter i alt</div><% if (last_seen_at) { %><div style='color:#999;font-size:0.8em;margin-top:4px'>Opdateret: <%= last_seen_at %></div><% } %></div>",
+        "layercontrol": true,
+        "visible": false,
+        "lazyload": true,
+        "prefilter": [
+          {
+            "name": "operator_name",
+            "op": "=",
+            "val": "Monta"
+          }
+        ]
+      },
+      {
+        "id": "operator_14_strandby_el_teknik_a_s",
+        "name": "Strandby El-teknik A/S (42)",
+        "type": "geojson",
+        "features": true,
+        "features_host": "http://localhost:8080/api/rpc/monta_charging_points_bbox?xmin=<%= bbox[0] %>&ymin=<%= bbox[1] %>&xmax=<%= bbox[2] %>&ymax=<%= bbox[3] %>",
+        "features_dataType": "json",
+        "features_type": "Point",
+        "srs": "EPSG:4326",
+        "loadingstrategy": "bbox",
+        "computedProperties": [
+          {
+            "name": "statusColor",
+            "template": "<% if (available_count > 0) { %>rgba(40,167,69,1)<% } else if (occupied_count > 0) { %>rgba(220,53,69,1)<% } else { %>rgba(108,117,125,0.8)<% } %>"
+          },
+          {
+            "name": "statusLabel",
+            "template": "<% if (available_count > 0 || occupied_count > 0) { %><span style='color:#28a745;font-weight:600'><%= available_count %> ledig<%= available_count === 1 ? '' : 'e' %></span> · <span style='color:#dc3545'><%= occupied_count %> optaget</span><% if (out_of_service_count > 0) { %> · <span style='color:#999'><%= out_of_service_count %> ude af drift</span><% } %><% } else { %><span style='color:#999'>Status ukendt</span><% } %>"
+          },
+          {
+            "name": "connectorList",
+            "template": "<% var typeMap={'iec62196T2':'Type 2','chademo':'CHAdeMO','ccs1':'CCS1','ccs2':'CCS2','type1':'Type 1','iec62196T2Combo':'CCS2'}; if(connector_types && connector_types.length){ %><%= connector_types.map(function(t){return typeMap[t]||t}).join(', ') %><% } %>"
+          }
+        ],
+        "features_style": {
+          "symbol": "circle",
+          "radius": 8,
+          "fillcolor": "<%= statusColor %>",
+          "strokecolor": "rgba(255,255,255,0.9)",
+          "strokewidth": 2
+        },
+        "template_info": "<div class='widget-hoverbox-title'><%= site_name %></div><div class='widget-hoverbox-sub'><div><%= address %>, <%= postal_code %> <%= city %></div><% if (operator_name) { %><div>Operatør: <%= operator_name %></div><% } %><div><%= ac_count %> AC · <%= dc_count %> DC · max <%= max_power_kw %> kW</div><% if (connectorList) { %><div>Stik: <%= connectorList %></div><% } %><div style='margin-top:8px;font-size:1em'><%= statusLabel %></div><div style='color:#666;font-size:0.85em;margin-top:2px'><%= evse_count %> ladepunkter i alt</div><% if (last_seen_at) { %><div style='color:#999;font-size:0.8em;margin-top:4px'>Opdateret: <%= last_seen_at %></div><% } %></div>",
+        "layercontrol": true,
+        "visible": false,
+        "lazyload": true,
+        "prefilter": [
+          {
+            "name": "operator_name",
+            "op": "=",
+            "val": "Strandby El-teknik A/S"
+          }
+        ]
+      },
+      {
+        "id": "operator_15_sef_energi",
+        "name": "SEF Energi (21)",
+        "type": "geojson",
+        "features": true,
+        "features_host": "http://localhost:8080/api/rpc/monta_charging_points_bbox?xmin=<%= bbox[0] %>&ymin=<%= bbox[1] %>&xmax=<%= bbox[2] %>&ymax=<%= bbox[3] %>",
+        "features_dataType": "json",
+        "features_type": "Point",
+        "srs": "EPSG:4326",
+        "loadingstrategy": "bbox",
+        "computedProperties": [
+          {
+            "name": "statusColor",
+            "template": "<% if (available_count > 0) { %>rgba(40,167,69,1)<% } else if (occupied_count > 0) { %>rgba(220,53,69,1)<% } else { %>rgba(108,117,125,0.8)<% } %>"
+          },
+          {
+            "name": "statusLabel",
+            "template": "<% if (available_count > 0 || occupied_count > 0) { %><span style='color:#28a745;font-weight:600'><%= available_count %> ledig<%= available_count === 1 ? '' : 'e' %></span> · <span style='color:#dc3545'><%= occupied_count %> optaget</span><% if (out_of_service_count > 0) { %> · <span style='color:#999'><%= out_of_service_count %> ude af drift</span><% } %><% } else { %><span style='color:#999'>Status ukendt</span><% } %>"
+          },
+          {
+            "name": "connectorList",
+            "template": "<% var typeMap={'iec62196T2':'Type 2','chademo':'CHAdeMO','ccs1':'CCS1','ccs2':'CCS2','type1':'Type 1','iec62196T2Combo':'CCS2'}; if(connector_types && connector_types.length){ %><%= connector_types.map(function(t){return typeMap[t]||t}).join(', ') %><% } %>"
+          }
+        ],
+        "features_style": {
+          "symbol": "circle",
+          "radius": 8,
+          "fillcolor": "<%= statusColor %>",
+          "strokecolor": "rgba(255,255,255,0.9)",
+          "strokewidth": 2
+        },
+        "template_info": "<div class='widget-hoverbox-title'><%= site_name %></div><div class='widget-hoverbox-sub'><div><%= address %>, <%= postal_code %> <%= city %></div><% if (operator_name) { %><div>Operatør: <%= operator_name %></div><% } %><div><%= ac_count %> AC · <%= dc_count %> DC · max <%= max_power_kw %> kW</div><% if (connectorList) { %><div>Stik: <%= connectorList %></div><% } %><div style='margin-top:8px;font-size:1em'><%= statusLabel %></div><div style='color:#666;font-size:0.85em;margin-top:2px'><%= evse_count %> ladepunkter i alt</div><% if (last_seen_at) { %><div style='color:#999;font-size:0.8em;margin-top:4px'>Opdateret: <%= last_seen_at %></div><% } %></div>",
+        "layercontrol": true,
+        "visible": false,
+        "lazyload": true,
+        "prefilter": [
+          {
+            "name": "operator_name",
+            "op": "=",
+            "val": "SEF Energi"
+          }
+        ]
+      },
+      {
+        "id": "operator_16_gardian",
+        "name": "Gardian (20)",
+        "type": "geojson",
+        "features": true,
+        "features_host": "http://localhost:8080/api/rpc/monta_charging_points_bbox?xmin=<%= bbox[0] %>&ymin=<%= bbox[1] %>&xmax=<%= bbox[2] %>&ymax=<%= bbox[3] %>",
+        "features_dataType": "json",
+        "features_type": "Point",
+        "srs": "EPSG:4326",
+        "loadingstrategy": "bbox",
+        "computedProperties": [
+          {
+            "name": "statusColor",
+            "template": "<% if (available_count > 0) { %>rgba(40,167,69,1)<% } else if (occupied_count > 0) { %>rgba(220,53,69,1)<% } else { %>rgba(108,117,125,0.8)<% } %>"
+          },
+          {
+            "name": "statusLabel",
+            "template": "<% if (available_count > 0 || occupied_count > 0) { %><span style='color:#28a745;font-weight:600'><%= available_count %> ledig<%= available_count === 1 ? '' : 'e' %></span> · <span style='color:#dc3545'><%= occupied_count %> optaget</span><% if (out_of_service_count > 0) { %> · <span style='color:#999'><%= out_of_service_count %> ude af drift</span><% } %><% } else { %><span style='color:#999'>Status ukendt</span><% } %>"
+          },
+          {
+            "name": "connectorList",
+            "template": "<% var typeMap={'iec62196T2':'Type 2','chademo':'CHAdeMO','ccs1':'CCS1','ccs2':'CCS2','type1':'Type 1','iec62196T2Combo':'CCS2'}; if(connector_types && connector_types.length){ %><%= connector_types.map(function(t){return typeMap[t]||t}).join(', ') %><% } %>"
+          }
+        ],
+        "features_style": {
+          "symbol": "circle",
+          "radius": 8,
+          "fillcolor": "<%= statusColor %>",
+          "strokecolor": "rgba(255,255,255,0.9)",
+          "strokewidth": 2
+        },
+        "template_info": "<div class='widget-hoverbox-title'><%= site_name %></div><div class='widget-hoverbox-sub'><div><%= address %>, <%= postal_code %> <%= city %></div><% if (operator_name) { %><div>Operatør: <%= operator_name %></div><% } %><div><%= ac_count %> AC · <%= dc_count %> DC · max <%= max_power_kw %> kW</div><% if (connectorList) { %><div>Stik: <%= connectorList %></div><% } %><div style='margin-top:8px;font-size:1em'><%= statusLabel %></div><div style='color:#666;font-size:0.85em;margin-top:2px'><%= evse_count %> ladepunkter i alt</div><% if (last_seen_at) { %><div style='color:#999;font-size:0.8em;margin-top:4px'>Opdateret: <%= last_seen_at %></div><% } %></div>",
+        "layercontrol": true,
+        "visible": false,
+        "lazyload": true,
+        "prefilter": [
+          {
+            "name": "operator_name",
+            "op": "=",
+            "val": "Gardian"
+          }
+        ]
+      },
+      {
+        "id": "operator_17_str_mlinet_a_s",
+        "name": "Strømlinet A/S (20)",
+        "type": "geojson",
+        "features": true,
+        "features_host": "http://localhost:8080/api/rpc/monta_charging_points_bbox?xmin=<%= bbox[0] %>&ymin=<%= bbox[1] %>&xmax=<%= bbox[2] %>&ymax=<%= bbox[3] %>",
+        "features_dataType": "json",
+        "features_type": "Point",
+        "srs": "EPSG:4326",
+        "loadingstrategy": "bbox",
+        "computedProperties": [
+          {
+            "name": "statusColor",
+            "template": "<% if (available_count > 0) { %>rgba(40,167,69,1)<% } else if (occupied_count > 0) { %>rgba(220,53,69,1)<% } else { %>rgba(108,117,125,0.8)<% } %>"
+          },
+          {
+            "name": "statusLabel",
+            "template": "<% if (available_count > 0 || occupied_count > 0) { %><span style='color:#28a745;font-weight:600'><%= available_count %> ledig<%= available_count === 1 ? '' : 'e' %></span> · <span style='color:#dc3545'><%= occupied_count %> optaget</span><% if (out_of_service_count > 0) { %> · <span style='color:#999'><%= out_of_service_count %> ude af drift</span><% } %><% } else { %><span style='color:#999'>Status ukendt</span><% } %>"
+          },
+          {
+            "name": "connectorList",
+            "template": "<% var typeMap={'iec62196T2':'Type 2','chademo':'CHAdeMO','ccs1':'CCS1','ccs2':'CCS2','type1':'Type 1','iec62196T2Combo':'CCS2'}; if(connector_types && connector_types.length){ %><%= connector_types.map(function(t){return typeMap[t]||t}).join(', ') %><% } %>"
+          }
+        ],
+        "features_style": {
+          "symbol": "circle",
+          "radius": 8,
+          "fillcolor": "<%= statusColor %>",
+          "strokecolor": "rgba(255,255,255,0.9)",
+          "strokewidth": 2
+        },
+        "template_info": "<div class='widget-hoverbox-title'><%= site_name %></div><div class='widget-hoverbox-sub'><div><%= address %>, <%= postal_code %> <%= city %></div><% if (operator_name) { %><div>Operatør: <%= operator_name %></div><% } %><div><%= ac_count %> AC · <%= dc_count %> DC · max <%= max_power_kw %> kW</div><% if (connectorList) { %><div>Stik: <%= connectorList %></div><% } %><div style='margin-top:8px;font-size:1em'><%= statusLabel %></div><div style='color:#666;font-size:0.85em;margin-top:2px'><%= evse_count %> ladepunkter i alt</div><% if (last_seen_at) { %><div style='color:#999;font-size:0.8em;margin-top:4px'>Opdateret: <%= last_seen_at %></div><% } %></div>",
+        "layercontrol": true,
+        "visible": false,
+        "lazyload": true,
+        "prefilter": [
+          {
+            "name": "operator_name",
+            "op": "=",
+            "val": "Strømlinet A/S"
+          }
+        ]
+      },
+      {
+        "id": "operator_18_hessel_power",
+        "name": "Hessel Power (19)",
+        "type": "geojson",
+        "features": true,
+        "features_host": "http://localhost:8080/api/rpc/monta_charging_points_bbox?xmin=<%= bbox[0] %>&ymin=<%= bbox[1] %>&xmax=<%= bbox[2] %>&ymax=<%= bbox[3] %>",
+        "features_dataType": "json",
+        "features_type": "Point",
+        "srs": "EPSG:4326",
+        "loadingstrategy": "bbox",
+        "computedProperties": [
+          {
+            "name": "statusColor",
+            "template": "<% if (available_count > 0) { %>rgba(40,167,69,1)<% } else if (occupied_count > 0) { %>rgba(220,53,69,1)<% } else { %>rgba(108,117,125,0.8)<% } %>"
+          },
+          {
+            "name": "statusLabel",
+            "template": "<% if (available_count > 0 || occupied_count > 0) { %><span style='color:#28a745;font-weight:600'><%= available_count %> ledig<%= available_count === 1 ? '' : 'e' %></span> · <span style='color:#dc3545'><%= occupied_count %> optaget</span><% if (out_of_service_count > 0) { %> · <span style='color:#999'><%= out_of_service_count %> ude af drift</span><% } %><% } else { %><span style='color:#999'>Status ukendt</span><% } %>"
+          },
+          {
+            "name": "connectorList",
+            "template": "<% var typeMap={'iec62196T2':'Type 2','chademo':'CHAdeMO','ccs1':'CCS1','ccs2':'CCS2','type1':'Type 1','iec62196T2Combo':'CCS2'}; if(connector_types && connector_types.length){ %><%= connector_types.map(function(t){return typeMap[t]||t}).join(', ') %><% } %>"
+          }
+        ],
+        "features_style": {
+          "symbol": "circle",
+          "radius": 8,
+          "fillcolor": "<%= statusColor %>",
+          "strokecolor": "rgba(255,255,255,0.9)",
+          "strokewidth": 2
+        },
+        "template_info": "<div class='widget-hoverbox-title'><%= site_name %></div><div class='widget-hoverbox-sub'><div><%= address %>, <%= postal_code %> <%= city %></div><% if (operator_name) { %><div>Operatør: <%= operator_name %></div><% } %><div><%= ac_count %> AC · <%= dc_count %> DC · max <%= max_power_kw %> kW</div><% if (connectorList) { %><div>Stik: <%= connectorList %></div><% } %><div style='margin-top:8px;font-size:1em'><%= statusLabel %></div><div style='color:#666;font-size:0.85em;margin-top:2px'><%= evse_count %> ladepunkter i alt</div><% if (last_seen_at) { %><div style='color:#999;font-size:0.8em;margin-top:4px'>Opdateret: <%= last_seen_at %></div><% } %></div>",
+        "layercontrol": true,
+        "visible": false,
+        "lazyload": true,
+        "prefilter": [
+          {
+            "name": "operator_name",
+            "op": "=",
+            "val": "Hessel Power"
+          }
+        ]
+      },
+      {
+        "id": "operator_19_go_energi_a_s",
+        "name": "go´energi A/S (18)",
+        "type": "geojson",
+        "features": true,
+        "features_host": "http://localhost:8080/api/rpc/monta_charging_points_bbox?xmin=<%= bbox[0] %>&ymin=<%= bbox[1] %>&xmax=<%= bbox[2] %>&ymax=<%= bbox[3] %>",
+        "features_dataType": "json",
+        "features_type": "Point",
+        "srs": "EPSG:4326",
+        "loadingstrategy": "bbox",
+        "computedProperties": [
+          {
+            "name": "statusColor",
+            "template": "<% if (available_count > 0) { %>rgba(40,167,69,1)<% } else if (occupied_count > 0) { %>rgba(220,53,69,1)<% } else { %>rgba(108,117,125,0.8)<% } %>"
+          },
+          {
+            "name": "statusLabel",
+            "template": "<% if (available_count > 0 || occupied_count > 0) { %><span style='color:#28a745;font-weight:600'><%= available_count %> ledig<%= available_count === 1 ? '' : 'e' %></span> · <span style='color:#dc3545'><%= occupied_count %> optaget</span><% if (out_of_service_count > 0) { %> · <span style='color:#999'><%= out_of_service_count %> ude af drift</span><% } %><% } else { %><span style='color:#999'>Status ukendt</span><% } %>"
+          },
+          {
+            "name": "connectorList",
+            "template": "<% var typeMap={'iec62196T2':'Type 2','chademo':'CHAdeMO','ccs1':'CCS1','ccs2':'CCS2','type1':'Type 1','iec62196T2Combo':'CCS2'}; if(connector_types && connector_types.length){ %><%= connector_types.map(function(t){return typeMap[t]||t}).join(', ') %><% } %>"
+          }
+        ],
+        "features_style": {
+          "symbol": "circle",
+          "radius": 8,
+          "fillcolor": "<%= statusColor %>",
+          "strokecolor": "rgba(255,255,255,0.9)",
+          "strokewidth": 2
+        },
+        "template_info": "<div class='widget-hoverbox-title'><%= site_name %></div><div class='widget-hoverbox-sub'><div><%= address %>, <%= postal_code %> <%= city %></div><% if (operator_name) { %><div>Operatør: <%= operator_name %></div><% } %><div><%= ac_count %> AC · <%= dc_count %> DC · max <%= max_power_kw %> kW</div><% if (connectorList) { %><div>Stik: <%= connectorList %></div><% } %><div style='margin-top:8px;font-size:1em'><%= statusLabel %></div><div style='color:#666;font-size:0.85em;margin-top:2px'><%= evse_count %> ladepunkter i alt</div><% if (last_seen_at) { %><div style='color:#999;font-size:0.8em;margin-top:4px'>Opdateret: <%= last_seen_at %></div><% } %></div>",
+        "layercontrol": true,
+        "visible": false,
+        "lazyload": true,
+        "prefilter": [
+          {
+            "name": "operator_name",
+            "op": "=",
+            "val": "go´energi A/S"
+          }
+        ]
+      },
+      {
+        "id": "operator_20_vs_automatic_a_s",
+        "name": "VS AUTOMATIC A/S (16)",
+        "type": "geojson",
+        "features": true,
+        "features_host": "http://localhost:8080/api/rpc/monta_charging_points_bbox?xmin=<%= bbox[0] %>&ymin=<%= bbox[1] %>&xmax=<%= bbox[2] %>&ymax=<%= bbox[3] %>",
+        "features_dataType": "json",
+        "features_type": "Point",
+        "srs": "EPSG:4326",
+        "loadingstrategy": "bbox",
+        "computedProperties": [
+          {
+            "name": "statusColor",
+            "template": "<% if (available_count > 0) { %>rgba(40,167,69,1)<% } else if (occupied_count > 0) { %>rgba(220,53,69,1)<% } else { %>rgba(108,117,125,0.8)<% } %>"
+          },
+          {
+            "name": "statusLabel",
+            "template": "<% if (available_count > 0 || occupied_count > 0) { %><span style='color:#28a745;font-weight:600'><%= available_count %> ledig<%= available_count === 1 ? '' : 'e' %></span> · <span style='color:#dc3545'><%= occupied_count %> optaget</span><% if (out_of_service_count > 0) { %> · <span style='color:#999'><%= out_of_service_count %> ude af drift</span><% } %><% } else { %><span style='color:#999'>Status ukendt</span><% } %>"
+          },
+          {
+            "name": "connectorList",
+            "template": "<% var typeMap={'iec62196T2':'Type 2','chademo':'CHAdeMO','ccs1':'CCS1','ccs2':'CCS2','type1':'Type 1','iec62196T2Combo':'CCS2'}; if(connector_types && connector_types.length){ %><%= connector_types.map(function(t){return typeMap[t]||t}).join(', ') %><% } %>"
+          }
+        ],
+        "features_style": {
+          "symbol": "circle",
+          "radius": 8,
+          "fillcolor": "<%= statusColor %>",
+          "strokecolor": "rgba(255,255,255,0.9)",
+          "strokewidth": 2
+        },
+        "template_info": "<div class='widget-hoverbox-title'><%= site_name %></div><div class='widget-hoverbox-sub'><div><%= address %>, <%= postal_code %> <%= city %></div><% if (operator_name) { %><div>Operatør: <%= operator_name %></div><% } %><div><%= ac_count %> AC · <%= dc_count %> DC · max <%= max_power_kw %> kW</div><% if (connectorList) { %><div>Stik: <%= connectorList %></div><% } %><div style='margin-top:8px;font-size:1em'><%= statusLabel %></div><div style='color:#666;font-size:0.85em;margin-top:2px'><%= evse_count %> ladepunkter i alt</div><% if (last_seen_at) { %><div style='color:#999;font-size:0.8em;margin-top:4px'>Opdateret: <%= last_seen_at %></div><% } %></div>",
+        "layercontrol": true,
+        "visible": false,
+        "lazyload": true,
+        "prefilter": [
+          {
+            "name": "operator_name",
+            "op": "=",
+            "val": "VS AUTOMATIC A/S"
+          }
+        ]
+      },
+      {
+        "id": "operator_21_greenier",
+        "name": "Greenier (15)",
+        "type": "geojson",
+        "features": true,
+        "features_host": "http://localhost:8080/api/rpc/monta_charging_points_bbox?xmin=<%= bbox[0] %>&ymin=<%= bbox[1] %>&xmax=<%= bbox[2] %>&ymax=<%= bbox[3] %>",
+        "features_dataType": "json",
+        "features_type": "Point",
+        "srs": "EPSG:4326",
+        "loadingstrategy": "bbox",
+        "computedProperties": [
+          {
+            "name": "statusColor",
+            "template": "<% if (available_count > 0) { %>rgba(40,167,69,1)<% } else if (occupied_count > 0) { %>rgba(220,53,69,1)<% } else { %>rgba(108,117,125,0.8)<% } %>"
+          },
+          {
+            "name": "statusLabel",
+            "template": "<% if (available_count > 0 || occupied_count > 0) { %><span style='color:#28a745;font-weight:600'><%= available_count %> ledig<%= available_count === 1 ? '' : 'e' %></span> · <span style='color:#dc3545'><%= occupied_count %> optaget</span><% if (out_of_service_count > 0) { %> · <span style='color:#999'><%= out_of_service_count %> ude af drift</span><% } %><% } else { %><span style='color:#999'>Status ukendt</span><% } %>"
+          },
+          {
+            "name": "connectorList",
+            "template": "<% var typeMap={'iec62196T2':'Type 2','chademo':'CHAdeMO','ccs1':'CCS1','ccs2':'CCS2','type1':'Type 1','iec62196T2Combo':'CCS2'}; if(connector_types && connector_types.length){ %><%= connector_types.map(function(t){return typeMap[t]||t}).join(', ') %><% } %>"
+          }
+        ],
+        "features_style": {
+          "symbol": "circle",
+          "radius": 8,
+          "fillcolor": "<%= statusColor %>",
+          "strokecolor": "rgba(255,255,255,0.9)",
+          "strokewidth": 2
+        },
+        "template_info": "<div class='widget-hoverbox-title'><%= site_name %></div><div class='widget-hoverbox-sub'><div><%= address %>, <%= postal_code %> <%= city %></div><% if (operator_name) { %><div>Operatør: <%= operator_name %></div><% } %><div><%= ac_count %> AC · <%= dc_count %> DC · max <%= max_power_kw %> kW</div><% if (connectorList) { %><div>Stik: <%= connectorList %></div><% } %><div style='margin-top:8px;font-size:1em'><%= statusLabel %></div><div style='color:#666;font-size:0.85em;margin-top:2px'><%= evse_count %> ladepunkter i alt</div><% if (last_seen_at) { %><div style='color:#999;font-size:0.8em;margin-top:4px'>Opdateret: <%= last_seen_at %></div><% } %></div>",
+        "layercontrol": true,
+        "visible": false,
+        "lazyload": true,
+        "prefilter": [
+          {
+            "name": "operator_name",
+            "op": "=",
+            "val": "Greenier"
+          }
+        ]
+      },
+      {
+        "id": "operator_22_el_service_nord_aps",
+        "name": "El-Service Nord ApS (14)",
+        "type": "geojson",
+        "features": true,
+        "features_host": "http://localhost:8080/api/rpc/monta_charging_points_bbox?xmin=<%= bbox[0] %>&ymin=<%= bbox[1] %>&xmax=<%= bbox[2] %>&ymax=<%= bbox[3] %>",
+        "features_dataType": "json",
+        "features_type": "Point",
+        "srs": "EPSG:4326",
+        "loadingstrategy": "bbox",
+        "computedProperties": [
+          {
+            "name": "statusColor",
+            "template": "<% if (available_count > 0) { %>rgba(40,167,69,1)<% } else if (occupied_count > 0) { %>rgba(220,53,69,1)<% } else { %>rgba(108,117,125,0.8)<% } %>"
+          },
+          {
+            "name": "statusLabel",
+            "template": "<% if (available_count > 0 || occupied_count > 0) { %><span style='color:#28a745;font-weight:600'><%= available_count %> ledig<%= available_count === 1 ? '' : 'e' %></span> · <span style='color:#dc3545'><%= occupied_count %> optaget</span><% if (out_of_service_count > 0) { %> · <span style='color:#999'><%= out_of_service_count %> ude af drift</span><% } %><% } else { %><span style='color:#999'>Status ukendt</span><% } %>"
+          },
+          {
+            "name": "connectorList",
+            "template": "<% var typeMap={'iec62196T2':'Type 2','chademo':'CHAdeMO','ccs1':'CCS1','ccs2':'CCS2','type1':'Type 1','iec62196T2Combo':'CCS2'}; if(connector_types && connector_types.length){ %><%= connector_types.map(function(t){return typeMap[t]||t}).join(', ') %><% } %>"
+          }
+        ],
+        "features_style": {
+          "symbol": "circle",
+          "radius": 8,
+          "fillcolor": "<%= statusColor %>",
+          "strokecolor": "rgba(255,255,255,0.9)",
+          "strokewidth": 2
+        },
+        "template_info": "<div class='widget-hoverbox-title'><%= site_name %></div><div class='widget-hoverbox-sub'><div><%= address %>, <%= postal_code %> <%= city %></div><% if (operator_name) { %><div>Operatør: <%= operator_name %></div><% } %><div><%= ac_count %> AC · <%= dc_count %> DC · max <%= max_power_kw %> kW</div><% if (connectorList) { %><div>Stik: <%= connectorList %></div><% } %><div style='margin-top:8px;font-size:1em'><%= statusLabel %></div><div style='color:#666;font-size:0.85em;margin-top:2px'><%= evse_count %> ladepunkter i alt</div><% if (last_seen_at) { %><div style='color:#999;font-size:0.8em;margin-top:4px'>Opdateret: <%= last_seen_at %></div><% } %></div>",
+        "layercontrol": true,
+        "visible": false,
+        "lazyload": true,
+        "prefilter": [
+          {
+            "name": "operator_name",
+            "op": "=",
+            "val": "El-Service Nord ApS"
+          }
+        ]
+      },
+      {
+        "id": "operator_23_ewii_b2b",
+        "name": "EWII B2B (11)",
+        "type": "geojson",
+        "features": true,
+        "features_host": "http://localhost:8080/api/rpc/monta_charging_points_bbox?xmin=<%= bbox[0] %>&ymin=<%= bbox[1] %>&xmax=<%= bbox[2] %>&ymax=<%= bbox[3] %>",
+        "features_dataType": "json",
+        "features_type": "Point",
+        "srs": "EPSG:4326",
+        "loadingstrategy": "bbox",
+        "computedProperties": [
+          {
+            "name": "statusColor",
+            "template": "<% if (available_count > 0) { %>rgba(40,167,69,1)<% } else if (occupied_count > 0) { %>rgba(220,53,69,1)<% } else { %>rgba(108,117,125,0.8)<% } %>"
+          },
+          {
+            "name": "statusLabel",
+            "template": "<% if (available_count > 0 || occupied_count > 0) { %><span style='color:#28a745;font-weight:600'><%= available_count %> ledig<%= available_count === 1 ? '' : 'e' %></span> · <span style='color:#dc3545'><%= occupied_count %> optaget</span><% if (out_of_service_count > 0) { %> · <span style='color:#999'><%= out_of_service_count %> ude af drift</span><% } %><% } else { %><span style='color:#999'>Status ukendt</span><% } %>"
+          },
+          {
+            "name": "connectorList",
+            "template": "<% var typeMap={'iec62196T2':'Type 2','chademo':'CHAdeMO','ccs1':'CCS1','ccs2':'CCS2','type1':'Type 1','iec62196T2Combo':'CCS2'}; if(connector_types && connector_types.length){ %><%= connector_types.map(function(t){return typeMap[t]||t}).join(', ') %><% } %>"
+          }
+        ],
+        "features_style": {
+          "symbol": "circle",
+          "radius": 8,
+          "fillcolor": "<%= statusColor %>",
+          "strokecolor": "rgba(255,255,255,0.9)",
+          "strokewidth": 2
+        },
+        "template_info": "<div class='widget-hoverbox-title'><%= site_name %></div><div class='widget-hoverbox-sub'><div><%= address %>, <%= postal_code %> <%= city %></div><% if (operator_name) { %><div>Operatør: <%= operator_name %></div><% } %><div><%= ac_count %> AC · <%= dc_count %> DC · max <%= max_power_kw %> kW</div><% if (connectorList) { %><div>Stik: <%= connectorList %></div><% } %><div style='margin-top:8px;font-size:1em'><%= statusLabel %></div><div style='color:#666;font-size:0.85em;margin-top:2px'><%= evse_count %> ladepunkter i alt</div><% if (last_seen_at) { %><div style='color:#999;font-size:0.8em;margin-top:4px'>Opdateret: <%= last_seen_at %></div><% } %></div>",
+        "layercontrol": true,
+        "visible": false,
+        "lazyload": true,
+        "prefilter": [
+          {
+            "name": "operator_name",
+            "op": "=",
+            "val": "EWII B2B"
+          }
+        ]
+      },
+      {
+        "id": "operator_24_bornholms_energi_forsyning",
+        "name": "Bornholms Energi & Forsyning (10)",
+        "type": "geojson",
+        "features": true,
+        "features_host": "http://localhost:8080/api/rpc/monta_charging_points_bbox?xmin=<%= bbox[0] %>&ymin=<%= bbox[1] %>&xmax=<%= bbox[2] %>&ymax=<%= bbox[3] %>",
+        "features_dataType": "json",
+        "features_type": "Point",
+        "srs": "EPSG:4326",
+        "loadingstrategy": "bbox",
+        "computedProperties": [
+          {
+            "name": "statusColor",
+            "template": "<% if (available_count > 0) { %>rgba(40,167,69,1)<% } else if (occupied_count > 0) { %>rgba(220,53,69,1)<% } else { %>rgba(108,117,125,0.8)<% } %>"
+          },
+          {
+            "name": "statusLabel",
+            "template": "<% if (available_count > 0 || occupied_count > 0) { %><span style='color:#28a745;font-weight:600'><%= available_count %> ledig<%= available_count === 1 ? '' : 'e' %></span> · <span style='color:#dc3545'><%= occupied_count %> optaget</span><% if (out_of_service_count > 0) { %> · <span style='color:#999'><%= out_of_service_count %> ude af drift</span><% } %><% } else { %><span style='color:#999'>Status ukendt</span><% } %>"
+          },
+          {
+            "name": "connectorList",
+            "template": "<% var typeMap={'iec62196T2':'Type 2','chademo':'CHAdeMO','ccs1':'CCS1','ccs2':'CCS2','type1':'Type 1','iec62196T2Combo':'CCS2'}; if(connector_types && connector_types.length){ %><%= connector_types.map(function(t){return typeMap[t]||t}).join(', ') %><% } %>"
+          }
+        ],
+        "features_style": {
+          "symbol": "circle",
+          "radius": 8,
+          "fillcolor": "<%= statusColor %>",
+          "strokecolor": "rgba(255,255,255,0.9)",
+          "strokewidth": 2
+        },
+        "template_info": "<div class='widget-hoverbox-title'><%= site_name %></div><div class='widget-hoverbox-sub'><div><%= address %>, <%= postal_code %> <%= city %></div><% if (operator_name) { %><div>Operatør: <%= operator_name %></div><% } %><div><%= ac_count %> AC · <%= dc_count %> DC · max <%= max_power_kw %> kW</div><% if (connectorList) { %><div>Stik: <%= connectorList %></div><% } %><div style='margin-top:8px;font-size:1em'><%= statusLabel %></div><div style='color:#666;font-size:0.85em;margin-top:2px'><%= evse_count %> ladepunkter i alt</div><% if (last_seen_at) { %><div style='color:#999;font-size:0.8em;margin-top:4px'>Opdateret: <%= last_seen_at %></div><% } %></div>",
+        "layercontrol": true,
+        "visible": false,
+        "lazyload": true,
+        "prefilter": [
+          {
+            "name": "operator_name",
+            "op": "=",
+            "val": "Bornholms Energi & Forsyning"
+          }
+        ]
+      },
+      {
+        "id": "operator_25_outscale_installer",
+        "name": "Outscale Installer  (9)",
+        "type": "geojson",
+        "features": true,
+        "features_host": "http://localhost:8080/api/rpc/monta_charging_points_bbox?xmin=<%= bbox[0] %>&ymin=<%= bbox[1] %>&xmax=<%= bbox[2] %>&ymax=<%= bbox[3] %>",
+        "features_dataType": "json",
+        "features_type": "Point",
+        "srs": "EPSG:4326",
+        "loadingstrategy": "bbox",
+        "computedProperties": [
+          {
+            "name": "statusColor",
+            "template": "<% if (available_count > 0) { %>rgba(40,167,69,1)<% } else if (occupied_count > 0) { %>rgba(220,53,69,1)<% } else { %>rgba(108,117,125,0.8)<% } %>"
+          },
+          {
+            "name": "statusLabel",
+            "template": "<% if (available_count > 0 || occupied_count > 0) { %><span style='color:#28a745;font-weight:600'><%= available_count %> ledig<%= available_count === 1 ? '' : 'e' %></span> · <span style='color:#dc3545'><%= occupied_count %> optaget</span><% if (out_of_service_count > 0) { %> · <span style='color:#999'><%= out_of_service_count %> ude af drift</span><% } %><% } else { %><span style='color:#999'>Status ukendt</span><% } %>"
+          },
+          {
+            "name": "connectorList",
+            "template": "<% var typeMap={'iec62196T2':'Type 2','chademo':'CHAdeMO','ccs1':'CCS1','ccs2':'CCS2','type1':'Type 1','iec62196T2Combo':'CCS2'}; if(connector_types && connector_types.length){ %><%= connector_types.map(function(t){return typeMap[t]||t}).join(', ') %><% } %>"
+          }
+        ],
+        "features_style": {
+          "symbol": "circle",
+          "radius": 8,
+          "fillcolor": "<%= statusColor %>",
+          "strokecolor": "rgba(255,255,255,0.9)",
+          "strokewidth": 2
+        },
+        "template_info": "<div class='widget-hoverbox-title'><%= site_name %></div><div class='widget-hoverbox-sub'><div><%= address %>, <%= postal_code %> <%= city %></div><% if (operator_name) { %><div>Operatør: <%= operator_name %></div><% } %><div><%= ac_count %> AC · <%= dc_count %> DC · max <%= max_power_kw %> kW</div><% if (connectorList) { %><div>Stik: <%= connectorList %></div><% } %><div style='margin-top:8px;font-size:1em'><%= statusLabel %></div><div style='color:#666;font-size:0.85em;margin-top:2px'><%= evse_count %> ladepunkter i alt</div><% if (last_seen_at) { %><div style='color:#999;font-size:0.8em;margin-top:4px'>Opdateret: <%= last_seen_at %></div><% } %></div>",
+        "layercontrol": true,
+        "visible": false,
+        "lazyload": true,
+        "prefilter": [
+          {
+            "name": "operator_name",
+            "op": "=",
+            "val": "Outscale Installer "
+          }
+        ]
+      },
+      {
+        "id": "operator_26_el_garden_saltum_aps",
+        "name": "El-Gården Saltum ApS (9)",
+        "type": "geojson",
+        "features": true,
+        "features_host": "http://localhost:8080/api/rpc/monta_charging_points_bbox?xmin=<%= bbox[0] %>&ymin=<%= bbox[1] %>&xmax=<%= bbox[2] %>&ymax=<%= bbox[3] %>",
+        "features_dataType": "json",
+        "features_type": "Point",
+        "srs": "EPSG:4326",
+        "loadingstrategy": "bbox",
+        "computedProperties": [
+          {
+            "name": "statusColor",
+            "template": "<% if (available_count > 0) { %>rgba(40,167,69,1)<% } else if (occupied_count > 0) { %>rgba(220,53,69,1)<% } else { %>rgba(108,117,125,0.8)<% } %>"
+          },
+          {
+            "name": "statusLabel",
+            "template": "<% if (available_count > 0 || occupied_count > 0) { %><span style='color:#28a745;font-weight:600'><%= available_count %> ledig<%= available_count === 1 ? '' : 'e' %></span> · <span style='color:#dc3545'><%= occupied_count %> optaget</span><% if (out_of_service_count > 0) { %> · <span style='color:#999'><%= out_of_service_count %> ude af drift</span><% } %><% } else { %><span style='color:#999'>Status ukendt</span><% } %>"
+          },
+          {
+            "name": "connectorList",
+            "template": "<% var typeMap={'iec62196T2':'Type 2','chademo':'CHAdeMO','ccs1':'CCS1','ccs2':'CCS2','type1':'Type 1','iec62196T2Combo':'CCS2'}; if(connector_types && connector_types.length){ %><%= connector_types.map(function(t){return typeMap[t]||t}).join(', ') %><% } %>"
+          }
+        ],
+        "features_style": {
+          "symbol": "circle",
+          "radius": 8,
+          "fillcolor": "<%= statusColor %>",
+          "strokecolor": "rgba(255,255,255,0.9)",
+          "strokewidth": 2
+        },
+        "template_info": "<div class='widget-hoverbox-title'><%= site_name %></div><div class='widget-hoverbox-sub'><div><%= address %>, <%= postal_code %> <%= city %></div><% if (operator_name) { %><div>Operatør: <%= operator_name %></div><% } %><div><%= ac_count %> AC · <%= dc_count %> DC · max <%= max_power_kw %> kW</div><% if (connectorList) { %><div>Stik: <%= connectorList %></div><% } %><div style='margin-top:8px;font-size:1em'><%= statusLabel %></div><div style='color:#666;font-size:0.85em;margin-top:2px'><%= evse_count %> ladepunkter i alt</div><% if (last_seen_at) { %><div style='color:#999;font-size:0.8em;margin-top:4px'>Opdateret: <%= last_seen_at %></div><% } %></div>",
+        "layercontrol": true,
+        "visible": false,
+        "lazyload": true,
+        "prefilter": [
+          {
+            "name": "operator_name",
+            "op": "=",
+            "val": "El-Gården Saltum ApS"
+          }
+        ]
+      },
+      {
+        "id": "operator_27_holmriis_ebeltoft_el_installation_a_s",
+        "name": "HOLMRIIS-EBELTOFT EL-INSTALLATION A/S (8)",
+        "type": "geojson",
+        "features": true,
+        "features_host": "http://localhost:8080/api/rpc/monta_charging_points_bbox?xmin=<%= bbox[0] %>&ymin=<%= bbox[1] %>&xmax=<%= bbox[2] %>&ymax=<%= bbox[3] %>",
+        "features_dataType": "json",
+        "features_type": "Point",
+        "srs": "EPSG:4326",
+        "loadingstrategy": "bbox",
+        "computedProperties": [
+          {
+            "name": "statusColor",
+            "template": "<% if (available_count > 0) { %>rgba(40,167,69,1)<% } else if (occupied_count > 0) { %>rgba(220,53,69,1)<% } else { %>rgba(108,117,125,0.8)<% } %>"
+          },
+          {
+            "name": "statusLabel",
+            "template": "<% if (available_count > 0 || occupied_count > 0) { %><span style='color:#28a745;font-weight:600'><%= available_count %> ledig<%= available_count === 1 ? '' : 'e' %></span> · <span style='color:#dc3545'><%= occupied_count %> optaget</span><% if (out_of_service_count > 0) { %> · <span style='color:#999'><%= out_of_service_count %> ude af drift</span><% } %><% } else { %><span style='color:#999'>Status ukendt</span><% } %>"
+          },
+          {
+            "name": "connectorList",
+            "template": "<% var typeMap={'iec62196T2':'Type 2','chademo':'CHAdeMO','ccs1':'CCS1','ccs2':'CCS2','type1':'Type 1','iec62196T2Combo':'CCS2'}; if(connector_types && connector_types.length){ %><%= connector_types.map(function(t){return typeMap[t]||t}).join(', ') %><% } %>"
+          }
+        ],
+        "features_style": {
+          "symbol": "circle",
+          "radius": 8,
+          "fillcolor": "<%= statusColor %>",
+          "strokecolor": "rgba(255,255,255,0.9)",
+          "strokewidth": 2
+        },
+        "template_info": "<div class='widget-hoverbox-title'><%= site_name %></div><div class='widget-hoverbox-sub'><div><%= address %>, <%= postal_code %> <%= city %></div><% if (operator_name) { %><div>Operatør: <%= operator_name %></div><% } %><div><%= ac_count %> AC · <%= dc_count %> DC · max <%= max_power_kw %> kW</div><% if (connectorList) { %><div>Stik: <%= connectorList %></div><% } %><div style='margin-top:8px;font-size:1em'><%= statusLabel %></div><div style='color:#666;font-size:0.85em;margin-top:2px'><%= evse_count %> ladepunkter i alt</div><% if (last_seen_at) { %><div style='color:#999;font-size:0.8em;margin-top:4px'>Opdateret: <%= last_seen_at %></div><% } %></div>",
+        "layercontrol": true,
+        "visible": false,
+        "lazyload": true,
+        "prefilter": [
+          {
+            "name": "operator_name",
+            "op": "=",
+            "val": "HOLMRIIS-EBELTOFT EL-INSTALLATION A/S"
+          }
+        ]
+      },
+      {
+        "id": "operator_28_el_dam_aps",
+        "name": "EL-DAM ApS (7)",
+        "type": "geojson",
+        "features": true,
+        "features_host": "http://localhost:8080/api/rpc/monta_charging_points_bbox?xmin=<%= bbox[0] %>&ymin=<%= bbox[1] %>&xmax=<%= bbox[2] %>&ymax=<%= bbox[3] %>",
+        "features_dataType": "json",
+        "features_type": "Point",
+        "srs": "EPSG:4326",
+        "loadingstrategy": "bbox",
+        "computedProperties": [
+          {
+            "name": "statusColor",
+            "template": "<% if (available_count > 0) { %>rgba(40,167,69,1)<% } else if (occupied_count > 0) { %>rgba(220,53,69,1)<% } else { %>rgba(108,117,125,0.8)<% } %>"
+          },
+          {
+            "name": "statusLabel",
+            "template": "<% if (available_count > 0 || occupied_count > 0) { %><span style='color:#28a745;font-weight:600'><%= available_count %> ledig<%= available_count === 1 ? '' : 'e' %></span> · <span style='color:#dc3545'><%= occupied_count %> optaget</span><% if (out_of_service_count > 0) { %> · <span style='color:#999'><%= out_of_service_count %> ude af drift</span><% } %><% } else { %><span style='color:#999'>Status ukendt</span><% } %>"
+          },
+          {
+            "name": "connectorList",
+            "template": "<% var typeMap={'iec62196T2':'Type 2','chademo':'CHAdeMO','ccs1':'CCS1','ccs2':'CCS2','type1':'Type 1','iec62196T2Combo':'CCS2'}; if(connector_types && connector_types.length){ %><%= connector_types.map(function(t){return typeMap[t]||t}).join(', ') %><% } %>"
+          }
+        ],
+        "features_style": {
+          "symbol": "circle",
+          "radius": 8,
+          "fillcolor": "<%= statusColor %>",
+          "strokecolor": "rgba(255,255,255,0.9)",
+          "strokewidth": 2
+        },
+        "template_info": "<div class='widget-hoverbox-title'><%= site_name %></div><div class='widget-hoverbox-sub'><div><%= address %>, <%= postal_code %> <%= city %></div><% if (operator_name) { %><div>Operatør: <%= operator_name %></div><% } %><div><%= ac_count %> AC · <%= dc_count %> DC · max <%= max_power_kw %> kW</div><% if (connectorList) { %><div>Stik: <%= connectorList %></div><% } %><div style='margin-top:8px;font-size:1em'><%= statusLabel %></div><div style='color:#666;font-size:0.85em;margin-top:2px'><%= evse_count %> ladepunkter i alt</div><% if (last_seen_at) { %><div style='color:#999;font-size:0.8em;margin-top:4px'>Opdateret: <%= last_seen_at %></div><% } %></div>",
+        "layercontrol": true,
+        "visible": false,
+        "lazyload": true,
+        "prefilter": [
+          {
+            "name": "operator_name",
+            "op": "=",
+            "val": "EL-DAM ApS"
+          }
+        ]
+      },
+      {
+        "id": "operator_29_mth_biler_a_s_192",
+        "name": "MTH Biler A/S 192 (5)",
+        "type": "geojson",
+        "features": true,
+        "features_host": "http://localhost:8080/api/rpc/monta_charging_points_bbox?xmin=<%= bbox[0] %>&ymin=<%= bbox[1] %>&xmax=<%= bbox[2] %>&ymax=<%= bbox[3] %>",
+        "features_dataType": "json",
+        "features_type": "Point",
+        "srs": "EPSG:4326",
+        "loadingstrategy": "bbox",
+        "computedProperties": [
+          {
+            "name": "statusColor",
+            "template": "<% if (available_count > 0) { %>rgba(40,167,69,1)<% } else if (occupied_count > 0) { %>rgba(220,53,69,1)<% } else { %>rgba(108,117,125,0.8)<% } %>"
+          },
+          {
+            "name": "statusLabel",
+            "template": "<% if (available_count > 0 || occupied_count > 0) { %><span style='color:#28a745;font-weight:600'><%= available_count %> ledig<%= available_count === 1 ? '' : 'e' %></span> · <span style='color:#dc3545'><%= occupied_count %> optaget</span><% if (out_of_service_count > 0) { %> · <span style='color:#999'><%= out_of_service_count %> ude af drift</span><% } %><% } else { %><span style='color:#999'>Status ukendt</span><% } %>"
+          },
+          {
+            "name": "connectorList",
+            "template": "<% var typeMap={'iec62196T2':'Type 2','chademo':'CHAdeMO','ccs1':'CCS1','ccs2':'CCS2','type1':'Type 1','iec62196T2Combo':'CCS2'}; if(connector_types && connector_types.length){ %><%= connector_types.map(function(t){return typeMap[t]||t}).join(', ') %><% } %>"
+          }
+        ],
+        "features_style": {
+          "symbol": "circle",
+          "radius": 8,
+          "fillcolor": "<%= statusColor %>",
+          "strokecolor": "rgba(255,255,255,0.9)",
+          "strokewidth": 2
+        },
+        "template_info": "<div class='widget-hoverbox-title'><%= site_name %></div><div class='widget-hoverbox-sub'><div><%= address %>, <%= postal_code %> <%= city %></div><% if (operator_name) { %><div>Operatør: <%= operator_name %></div><% } %><div><%= ac_count %> AC · <%= dc_count %> DC · max <%= max_power_kw %> kW</div><% if (connectorList) { %><div>Stik: <%= connectorList %></div><% } %><div style='margin-top:8px;font-size:1em'><%= statusLabel %></div><div style='color:#666;font-size:0.85em;margin-top:2px'><%= evse_count %> ladepunkter i alt</div><% if (last_seen_at) { %><div style='color:#999;font-size:0.8em;margin-top:4px'>Opdateret: <%= last_seen_at %></div><% } %></div>",
+        "layercontrol": true,
+        "visible": false,
+        "lazyload": true,
+        "prefilter": [
+          {
+            "name": "operator_name",
+            "op": "=",
+            "val": "MTH Biler A/S 192"
+          }
+        ]
+      },
+      {
+        "id": "operator_30_blavand_el_teknik",
+        "name": "Blåvand El-Teknik (4)",
+        "type": "geojson",
+        "features": true,
+        "features_host": "http://localhost:8080/api/rpc/monta_charging_points_bbox?xmin=<%= bbox[0] %>&ymin=<%= bbox[1] %>&xmax=<%= bbox[2] %>&ymax=<%= bbox[3] %>",
+        "features_dataType": "json",
+        "features_type": "Point",
+        "srs": "EPSG:4326",
+        "loadingstrategy": "bbox",
+        "computedProperties": [
+          {
+            "name": "statusColor",
+            "template": "<% if (available_count > 0) { %>rgba(40,167,69,1)<% } else if (occupied_count > 0) { %>rgba(220,53,69,1)<% } else { %>rgba(108,117,125,0.8)<% } %>"
+          },
+          {
+            "name": "statusLabel",
+            "template": "<% if (available_count > 0 || occupied_count > 0) { %><span style='color:#28a745;font-weight:600'><%= available_count %> ledig<%= available_count === 1 ? '' : 'e' %></span> · <span style='color:#dc3545'><%= occupied_count %> optaget</span><% if (out_of_service_count > 0) { %> · <span style='color:#999'><%= out_of_service_count %> ude af drift</span><% } %><% } else { %><span style='color:#999'>Status ukendt</span><% } %>"
+          },
+          {
+            "name": "connectorList",
+            "template": "<% var typeMap={'iec62196T2':'Type 2','chademo':'CHAdeMO','ccs1':'CCS1','ccs2':'CCS2','type1':'Type 1','iec62196T2Combo':'CCS2'}; if(connector_types && connector_types.length){ %><%= connector_types.map(function(t){return typeMap[t]||t}).join(', ') %><% } %>"
+          }
+        ],
+        "features_style": {
+          "symbol": "circle",
+          "radius": 8,
+          "fillcolor": "<%= statusColor %>",
+          "strokecolor": "rgba(255,255,255,0.9)",
+          "strokewidth": 2
+        },
+        "template_info": "<div class='widget-hoverbox-title'><%= site_name %></div><div class='widget-hoverbox-sub'><div><%= address %>, <%= postal_code %> <%= city %></div><% if (operator_name) { %><div>Operatør: <%= operator_name %></div><% } %><div><%= ac_count %> AC · <%= dc_count %> DC · max <%= max_power_kw %> kW</div><% if (connectorList) { %><div>Stik: <%= connectorList %></div><% } %><div style='margin-top:8px;font-size:1em'><%= statusLabel %></div><div style='color:#666;font-size:0.85em;margin-top:2px'><%= evse_count %> ladepunkter i alt</div><% if (last_seen_at) { %><div style='color:#999;font-size:0.8em;margin-top:4px'>Opdateret: <%= last_seen_at %></div><% } %></div>",
+        "layercontrol": true,
+        "visible": false,
+        "lazyload": true,
+        "prefilter": [
+          {
+            "name": "operator_name",
+            "op": "=",
+            "val": "Blåvand El-Teknik"
+          }
+        ]
+      },
+      {
+        "id": "operator_31_monta_denmark",
+        "name": "Monta Denmark (4)",
+        "type": "geojson",
+        "features": true,
+        "features_host": "http://localhost:8080/api/rpc/monta_charging_points_bbox?xmin=<%= bbox[0] %>&ymin=<%= bbox[1] %>&xmax=<%= bbox[2] %>&ymax=<%= bbox[3] %>",
+        "features_dataType": "json",
+        "features_type": "Point",
+        "srs": "EPSG:4326",
+        "loadingstrategy": "bbox",
+        "computedProperties": [
+          {
+            "name": "statusColor",
+            "template": "<% if (available_count > 0) { %>rgba(40,167,69,1)<% } else if (occupied_count > 0) { %>rgba(220,53,69,1)<% } else { %>rgba(108,117,125,0.8)<% } %>"
+          },
+          {
+            "name": "statusLabel",
+            "template": "<% if (available_count > 0 || occupied_count > 0) { %><span style='color:#28a745;font-weight:600'><%= available_count %> ledig<%= available_count === 1 ? '' : 'e' %></span> · <span style='color:#dc3545'><%= occupied_count %> optaget</span><% if (out_of_service_count > 0) { %> · <span style='color:#999'><%= out_of_service_count %> ude af drift</span><% } %><% } else { %><span style='color:#999'>Status ukendt</span><% } %>"
+          },
+          {
+            "name": "connectorList",
+            "template": "<% var typeMap={'iec62196T2':'Type 2','chademo':'CHAdeMO','ccs1':'CCS1','ccs2':'CCS2','type1':'Type 1','iec62196T2Combo':'CCS2'}; if(connector_types && connector_types.length){ %><%= connector_types.map(function(t){return typeMap[t]||t}).join(', ') %><% } %>"
+          }
+        ],
+        "features_style": {
+          "symbol": "circle",
+          "radius": 8,
+          "fillcolor": "<%= statusColor %>",
+          "strokecolor": "rgba(255,255,255,0.9)",
+          "strokewidth": 2
+        },
+        "template_info": "<div class='widget-hoverbox-title'><%= site_name %></div><div class='widget-hoverbox-sub'><div><%= address %>, <%= postal_code %> <%= city %></div><% if (operator_name) { %><div>Operatør: <%= operator_name %></div><% } %><div><%= ac_count %> AC · <%= dc_count %> DC · max <%= max_power_kw %> kW</div><% if (connectorList) { %><div>Stik: <%= connectorList %></div><% } %><div style='margin-top:8px;font-size:1em'><%= statusLabel %></div><div style='color:#666;font-size:0.85em;margin-top:2px'><%= evse_count %> ladepunkter i alt</div><% if (last_seen_at) { %><div style='color:#999;font-size:0.8em;margin-top:4px'>Opdateret: <%= last_seen_at %></div><% } %></div>",
+        "layercontrol": true,
+        "visible": false,
+        "lazyload": true,
+        "prefilter": [
+          {
+            "name": "operator_name",
+            "op": "=",
+            "val": "Monta Denmark"
+          }
+        ]
+      },
+      {
+        "id": "operator_32_sts_biler_a_s_107",
+        "name": "STS Biler A/S 107 (2)",
+        "type": "geojson",
+        "features": true,
+        "features_host": "http://localhost:8080/api/rpc/monta_charging_points_bbox?xmin=<%= bbox[0] %>&ymin=<%= bbox[1] %>&xmax=<%= bbox[2] %>&ymax=<%= bbox[3] %>",
+        "features_dataType": "json",
+        "features_type": "Point",
+        "srs": "EPSG:4326",
+        "loadingstrategy": "bbox",
+        "computedProperties": [
+          {
+            "name": "statusColor",
+            "template": "<% if (available_count > 0) { %>rgba(40,167,69,1)<% } else if (occupied_count > 0) { %>rgba(220,53,69,1)<% } else { %>rgba(108,117,125,0.8)<% } %>"
+          },
+          {
+            "name": "statusLabel",
+            "template": "<% if (available_count > 0 || occupied_count > 0) { %><span style='color:#28a745;font-weight:600'><%= available_count %> ledig<%= available_count === 1 ? '' : 'e' %></span> · <span style='color:#dc3545'><%= occupied_count %> optaget</span><% if (out_of_service_count > 0) { %> · <span style='color:#999'><%= out_of_service_count %> ude af drift</span><% } %><% } else { %><span style='color:#999'>Status ukendt</span><% } %>"
+          },
+          {
+            "name": "connectorList",
+            "template": "<% var typeMap={'iec62196T2':'Type 2','chademo':'CHAdeMO','ccs1':'CCS1','ccs2':'CCS2','type1':'Type 1','iec62196T2Combo':'CCS2'}; if(connector_types && connector_types.length){ %><%= connector_types.map(function(t){return typeMap[t]||t}).join(', ') %><% } %>"
+          }
+        ],
+        "features_style": {
+          "symbol": "circle",
+          "radius": 8,
+          "fillcolor": "<%= statusColor %>",
+          "strokecolor": "rgba(255,255,255,0.9)",
+          "strokewidth": 2
+        },
+        "template_info": "<div class='widget-hoverbox-title'><%= site_name %></div><div class='widget-hoverbox-sub'><div><%= address %>, <%= postal_code %> <%= city %></div><% if (operator_name) { %><div>Operatør: <%= operator_name %></div><% } %><div><%= ac_count %> AC · <%= dc_count %> DC · max <%= max_power_kw %> kW</div><% if (connectorList) { %><div>Stik: <%= connectorList %></div><% } %><div style='margin-top:8px;font-size:1em'><%= statusLabel %></div><div style='color:#666;font-size:0.85em;margin-top:2px'><%= evse_count %> ladepunkter i alt</div><% if (last_seen_at) { %><div style='color:#999;font-size:0.8em;margin-top:4px'>Opdateret: <%= last_seen_at %></div><% } %></div>",
+        "layercontrol": true,
+        "visible": false,
+        "lazyload": true,
+        "prefilter": [
+          {
+            "name": "operator_name",
+            "op": "=",
+            "val": "STS Biler A/S 107"
+          }
+        ]
+      },
+      {
+        "id": "operator_33_bp_soendergaard",
+        "name": "BP Soendergaard (2)",
+        "type": "geojson",
+        "features": true,
+        "features_host": "http://localhost:8080/api/rpc/monta_charging_points_bbox?xmin=<%= bbox[0] %>&ymin=<%= bbox[1] %>&xmax=<%= bbox[2] %>&ymax=<%= bbox[3] %>",
+        "features_dataType": "json",
+        "features_type": "Point",
+        "srs": "EPSG:4326",
+        "loadingstrategy": "bbox",
+        "computedProperties": [
+          {
+            "name": "statusColor",
+            "template": "<% if (available_count > 0) { %>rgba(40,167,69,1)<% } else if (occupied_count > 0) { %>rgba(220,53,69,1)<% } else { %>rgba(108,117,125,0.8)<% } %>"
+          },
+          {
+            "name": "statusLabel",
+            "template": "<% if (available_count > 0 || occupied_count > 0) { %><span style='color:#28a745;font-weight:600'><%= available_count %> ledig<%= available_count === 1 ? '' : 'e' %></span> · <span style='color:#dc3545'><%= occupied_count %> optaget</span><% if (out_of_service_count > 0) { %> · <span style='color:#999'><%= out_of_service_count %> ude af drift</span><% } %><% } else { %><span style='color:#999'>Status ukendt</span><% } %>"
+          },
+          {
+            "name": "connectorList",
+            "template": "<% var typeMap={'iec62196T2':'Type 2','chademo':'CHAdeMO','ccs1':'CCS1','ccs2':'CCS2','type1':'Type 1','iec62196T2Combo':'CCS2'}; if(connector_types && connector_types.length){ %><%= connector_types.map(function(t){return typeMap[t]||t}).join(', ') %><% } %>"
+          }
+        ],
+        "features_style": {
+          "symbol": "circle",
+          "radius": 8,
+          "fillcolor": "<%= statusColor %>",
+          "strokecolor": "rgba(255,255,255,0.9)",
+          "strokewidth": 2
+        },
+        "template_info": "<div class='widget-hoverbox-title'><%= site_name %></div><div class='widget-hoverbox-sub'><div><%= address %>, <%= postal_code %> <%= city %></div><% if (operator_name) { %><div>Operatør: <%= operator_name %></div><% } %><div><%= ac_count %> AC · <%= dc_count %> DC · max <%= max_power_kw %> kW</div><% if (connectorList) { %><div>Stik: <%= connectorList %></div><% } %><div style='margin-top:8px;font-size:1em'><%= statusLabel %></div><div style='color:#666;font-size:0.85em;margin-top:2px'><%= evse_count %> ladepunkter i alt</div><% if (last_seen_at) { %><div style='color:#999;font-size:0.8em;margin-top:4px'>Opdateret: <%= last_seen_at %></div><% } %></div>",
+        "layercontrol": true,
+        "visible": false,
+        "lazyload": true,
+        "prefilter": [
+          {
+            "name": "operator_name",
+            "op": "=",
+            "val": "BP Soendergaard"
+          }
+        ]
+      },
+      {
+        "id": "operator_34_knud_j_rgensen_el_aps",
+        "name": "Knud Jørgensen El ApS (2)",
+        "type": "geojson",
+        "features": true,
+        "features_host": "http://localhost:8080/api/rpc/monta_charging_points_bbox?xmin=<%= bbox[0] %>&ymin=<%= bbox[1] %>&xmax=<%= bbox[2] %>&ymax=<%= bbox[3] %>",
+        "features_dataType": "json",
+        "features_type": "Point",
+        "srs": "EPSG:4326",
+        "loadingstrategy": "bbox",
+        "computedProperties": [
+          {
+            "name": "statusColor",
+            "template": "<% if (available_count > 0) { %>rgba(40,167,69,1)<% } else if (occupied_count > 0) { %>rgba(220,53,69,1)<% } else { %>rgba(108,117,125,0.8)<% } %>"
+          },
+          {
+            "name": "statusLabel",
+            "template": "<% if (available_count > 0 || occupied_count > 0) { %><span style='color:#28a745;font-weight:600'><%= available_count %> ledig<%= available_count === 1 ? '' : 'e' %></span> · <span style='color:#dc3545'><%= occupied_count %> optaget</span><% if (out_of_service_count > 0) { %> · <span style='color:#999'><%= out_of_service_count %> ude af drift</span><% } %><% } else { %><span style='color:#999'>Status ukendt</span><% } %>"
+          },
+          {
+            "name": "connectorList",
+            "template": "<% var typeMap={'iec62196T2':'Type 2','chademo':'CHAdeMO','ccs1':'CCS1','ccs2':'CCS2','type1':'Type 1','iec62196T2Combo':'CCS2'}; if(connector_types && connector_types.length){ %><%= connector_types.map(function(t){return typeMap[t]||t}).join(', ') %><% } %>"
+          }
+        ],
+        "features_style": {
+          "symbol": "circle",
+          "radius": 8,
+          "fillcolor": "<%= statusColor %>",
+          "strokecolor": "rgba(255,255,255,0.9)",
+          "strokewidth": 2
+        },
+        "template_info": "<div class='widget-hoverbox-title'><%= site_name %></div><div class='widget-hoverbox-sub'><div><%= address %>, <%= postal_code %> <%= city %></div><% if (operator_name) { %><div>Operatør: <%= operator_name %></div><% } %><div><%= ac_count %> AC · <%= dc_count %> DC · max <%= max_power_kw %> kW</div><% if (connectorList) { %><div>Stik: <%= connectorList %></div><% } %><div style='margin-top:8px;font-size:1em'><%= statusLabel %></div><div style='color:#666;font-size:0.85em;margin-top:2px'><%= evse_count %> ladepunkter i alt</div><% if (last_seen_at) { %><div style='color:#999;font-size:0.8em;margin-top:4px'>Opdateret: <%= last_seen_at %></div><% } %></div>",
+        "layercontrol": true,
+        "visible": false,
+        "lazyload": true,
+        "prefilter": [
+          {
+            "name": "operator_name",
+            "op": "=",
+            "val": "Knud Jørgensen El ApS"
+          }
+        ]
+      },
+      {
+        "id": "operator_35_monta_group",
+        "name": "Monta group (2)",
+        "type": "geojson",
+        "features": true,
+        "features_host": "http://localhost:8080/api/rpc/monta_charging_points_bbox?xmin=<%= bbox[0] %>&ymin=<%= bbox[1] %>&xmax=<%= bbox[2] %>&ymax=<%= bbox[3] %>",
+        "features_dataType": "json",
+        "features_type": "Point",
+        "srs": "EPSG:4326",
+        "loadingstrategy": "bbox",
+        "computedProperties": [
+          {
+            "name": "statusColor",
+            "template": "<% if (available_count > 0) { %>rgba(40,167,69,1)<% } else if (occupied_count > 0) { %>rgba(220,53,69,1)<% } else { %>rgba(108,117,125,0.8)<% } %>"
+          },
+          {
+            "name": "statusLabel",
+            "template": "<% if (available_count > 0 || occupied_count > 0) { %><span style='color:#28a745;font-weight:600'><%= available_count %> ledig<%= available_count === 1 ? '' : 'e' %></span> · <span style='color:#dc3545'><%= occupied_count %> optaget</span><% if (out_of_service_count > 0) { %> · <span style='color:#999'><%= out_of_service_count %> ude af drift</span><% } %><% } else { %><span style='color:#999'>Status ukendt</span><% } %>"
+          },
+          {
+            "name": "connectorList",
+            "template": "<% var typeMap={'iec62196T2':'Type 2','chademo':'CHAdeMO','ccs1':'CCS1','ccs2':'CCS2','type1':'Type 1','iec62196T2Combo':'CCS2'}; if(connector_types && connector_types.length){ %><%= connector_types.map(function(t){return typeMap[t]||t}).join(', ') %><% } %>"
+          }
+        ],
+        "features_style": {
+          "symbol": "circle",
+          "radius": 8,
+          "fillcolor": "<%= statusColor %>",
+          "strokecolor": "rgba(255,255,255,0.9)",
+          "strokewidth": 2
+        },
+        "template_info": "<div class='widget-hoverbox-title'><%= site_name %></div><div class='widget-hoverbox-sub'><div><%= address %>, <%= postal_code %> <%= city %></div><% if (operator_name) { %><div>Operatør: <%= operator_name %></div><% } %><div><%= ac_count %> AC · <%= dc_count %> DC · max <%= max_power_kw %> kW</div><% if (connectorList) { %><div>Stik: <%= connectorList %></div><% } %><div style='margin-top:8px;font-size:1em'><%= statusLabel %></div><div style='color:#666;font-size:0.85em;margin-top:2px'><%= evse_count %> ladepunkter i alt</div><% if (last_seen_at) { %><div style='color:#999;font-size:0.8em;margin-top:4px'>Opdateret: <%= last_seen_at %></div><% } %></div>",
+        "layercontrol": true,
+        "visible": false,
+        "lazyload": true,
+        "prefilter": [
+          {
+            "name": "operator_name",
+            "op": "=",
+            "val": "Monta group"
+          }
+        ]
+      },
+      {
+        "id": "operator_36_jvs_a_s",
+        "name": "JVS A/S (2)",
+        "type": "geojson",
+        "features": true,
+        "features_host": "http://localhost:8080/api/rpc/monta_charging_points_bbox?xmin=<%= bbox[0] %>&ymin=<%= bbox[1] %>&xmax=<%= bbox[2] %>&ymax=<%= bbox[3] %>",
+        "features_dataType": "json",
+        "features_type": "Point",
+        "srs": "EPSG:4326",
+        "loadingstrategy": "bbox",
+        "computedProperties": [
+          {
+            "name": "statusColor",
+            "template": "<% if (available_count > 0) { %>rgba(40,167,69,1)<% } else if (occupied_count > 0) { %>rgba(220,53,69,1)<% } else { %>rgba(108,117,125,0.8)<% } %>"
+          },
+          {
+            "name": "statusLabel",
+            "template": "<% if (available_count > 0 || occupied_count > 0) { %><span style='color:#28a745;font-weight:600'><%= available_count %> ledig<%= available_count === 1 ? '' : 'e' %></span> · <span style='color:#dc3545'><%= occupied_count %> optaget</span><% if (out_of_service_count > 0) { %> · <span style='color:#999'><%= out_of_service_count %> ude af drift</span><% } %><% } else { %><span style='color:#999'>Status ukendt</span><% } %>"
+          },
+          {
+            "name": "connectorList",
+            "template": "<% var typeMap={'iec62196T2':'Type 2','chademo':'CHAdeMO','ccs1':'CCS1','ccs2':'CCS2','type1':'Type 1','iec62196T2Combo':'CCS2'}; if(connector_types && connector_types.length){ %><%= connector_types.map(function(t){return typeMap[t]||t}).join(', ') %><% } %>"
+          }
+        ],
+        "features_style": {
+          "symbol": "circle",
+          "radius": 8,
+          "fillcolor": "<%= statusColor %>",
+          "strokecolor": "rgba(255,255,255,0.9)",
+          "strokewidth": 2
+        },
+        "template_info": "<div class='widget-hoverbox-title'><%= site_name %></div><div class='widget-hoverbox-sub'><div><%= address %>, <%= postal_code %> <%= city %></div><% if (operator_name) { %><div>Operatør: <%= operator_name %></div><% } %><div><%= ac_count %> AC · <%= dc_count %> DC · max <%= max_power_kw %> kW</div><% if (connectorList) { %><div>Stik: <%= connectorList %></div><% } %><div style='margin-top:8px;font-size:1em'><%= statusLabel %></div><div style='color:#666;font-size:0.85em;margin-top:2px'><%= evse_count %> ladepunkter i alt</div><% if (last_seen_at) { %><div style='color:#999;font-size:0.8em;margin-top:4px'>Opdateret: <%= last_seen_at %></div><% } %></div>",
+        "layercontrol": true,
+        "visible": false,
+        "lazyload": true,
+        "prefilter": [
+          {
+            "name": "operator_name",
+            "op": "=",
+            "val": "JVS A/S"
+          }
+        ]
+      },
+      {
+        "id": "operator_37_qa_monta_test_only",
+        "name": "QA Monta (Test only) (2)",
+        "type": "geojson",
+        "features": true,
+        "features_host": "http://localhost:8080/api/rpc/monta_charging_points_bbox?xmin=<%= bbox[0] %>&ymin=<%= bbox[1] %>&xmax=<%= bbox[2] %>&ymax=<%= bbox[3] %>",
+        "features_dataType": "json",
+        "features_type": "Point",
+        "srs": "EPSG:4326",
+        "loadingstrategy": "bbox",
+        "computedProperties": [
+          {
+            "name": "statusColor",
+            "template": "<% if (available_count > 0) { %>rgba(40,167,69,1)<% } else if (occupied_count > 0) { %>rgba(220,53,69,1)<% } else { %>rgba(108,117,125,0.8)<% } %>"
+          },
+          {
+            "name": "statusLabel",
+            "template": "<% if (available_count > 0 || occupied_count > 0) { %><span style='color:#28a745;font-weight:600'><%= available_count %> ledig<%= available_count === 1 ? '' : 'e' %></span> · <span style='color:#dc3545'><%= occupied_count %> optaget</span><% if (out_of_service_count > 0) { %> · <span style='color:#999'><%= out_of_service_count %> ude af drift</span><% } %><% } else { %><span style='color:#999'>Status ukendt</span><% } %>"
+          },
+          {
+            "name": "connectorList",
+            "template": "<% var typeMap={'iec62196T2':'Type 2','chademo':'CHAdeMO','ccs1':'CCS1','ccs2':'CCS2','type1':'Type 1','iec62196T2Combo':'CCS2'}; if(connector_types && connector_types.length){ %><%= connector_types.map(function(t){return typeMap[t]||t}).join(', ') %><% } %>"
+          }
+        ],
+        "features_style": {
+          "symbol": "circle",
+          "radius": 8,
+          "fillcolor": "<%= statusColor %>",
+          "strokecolor": "rgba(255,255,255,0.9)",
+          "strokewidth": 2
+        },
+        "template_info": "<div class='widget-hoverbox-title'><%= site_name %></div><div class='widget-hoverbox-sub'><div><%= address %>, <%= postal_code %> <%= city %></div><% if (operator_name) { %><div>Operatør: <%= operator_name %></div><% } %><div><%= ac_count %> AC · <%= dc_count %> DC · max <%= max_power_kw %> kW</div><% if (connectorList) { %><div>Stik: <%= connectorList %></div><% } %><div style='margin-top:8px;font-size:1em'><%= statusLabel %></div><div style='color:#666;font-size:0.85em;margin-top:2px'><%= evse_count %> ladepunkter i alt</div><% if (last_seen_at) { %><div style='color:#999;font-size:0.8em;margin-top:4px'>Opdateret: <%= last_seen_at %></div><% } %></div>",
+        "layercontrol": true,
+        "visible": false,
+        "lazyload": true,
+        "prefilter": [
+          {
+            "name": "operator_name",
+            "op": "=",
+            "val": "QA Monta (Test only)"
+          }
+        ]
+      },
+      {
+        "id": "operator_38_sdkbiler_a_s_159",
+        "name": "SDKbiler A/S 159 (2)",
+        "type": "geojson",
+        "features": true,
+        "features_host": "http://localhost:8080/api/rpc/monta_charging_points_bbox?xmin=<%= bbox[0] %>&ymin=<%= bbox[1] %>&xmax=<%= bbox[2] %>&ymax=<%= bbox[3] %>",
+        "features_dataType": "json",
+        "features_type": "Point",
+        "srs": "EPSG:4326",
+        "loadingstrategy": "bbox",
+        "computedProperties": [
+          {
+            "name": "statusColor",
+            "template": "<% if (available_count > 0) { %>rgba(40,167,69,1)<% } else if (occupied_count > 0) { %>rgba(220,53,69,1)<% } else { %>rgba(108,117,125,0.8)<% } %>"
+          },
+          {
+            "name": "statusLabel",
+            "template": "<% if (available_count > 0 || occupied_count > 0) { %><span style='color:#28a745;font-weight:600'><%= available_count %> ledig<%= available_count === 1 ? '' : 'e' %></span> · <span style='color:#dc3545'><%= occupied_count %> optaget</span><% if (out_of_service_count > 0) { %> · <span style='color:#999'><%= out_of_service_count %> ude af drift</span><% } %><% } else { %><span style='color:#999'>Status ukendt</span><% } %>"
+          },
+          {
+            "name": "connectorList",
+            "template": "<% var typeMap={'iec62196T2':'Type 2','chademo':'CHAdeMO','ccs1':'CCS1','ccs2':'CCS2','type1':'Type 1','iec62196T2Combo':'CCS2'}; if(connector_types && connector_types.length){ %><%= connector_types.map(function(t){return typeMap[t]||t}).join(', ') %><% } %>"
+          }
+        ],
+        "features_style": {
+          "symbol": "circle",
+          "radius": 8,
+          "fillcolor": "<%= statusColor %>",
+          "strokecolor": "rgba(255,255,255,0.9)",
+          "strokewidth": 2
+        },
+        "template_info": "<div class='widget-hoverbox-title'><%= site_name %></div><div class='widget-hoverbox-sub'><div><%= address %>, <%= postal_code %> <%= city %></div><% if (operator_name) { %><div>Operatør: <%= operator_name %></div><% } %><div><%= ac_count %> AC · <%= dc_count %> DC · max <%= max_power_kw %> kW</div><% if (connectorList) { %><div>Stik: <%= connectorList %></div><% } %><div style='margin-top:8px;font-size:1em'><%= statusLabel %></div><div style='color:#666;font-size:0.85em;margin-top:2px'><%= evse_count %> ladepunkter i alt</div><% if (last_seen_at) { %><div style='color:#999;font-size:0.8em;margin-top:4px'>Opdateret: <%= last_seen_at %></div><% } %></div>",
+        "layercontrol": true,
+        "visible": false,
+        "lazyload": true,
+        "prefilter": [
+          {
+            "name": "operator_name",
+            "op": "=",
+            "val": "SDKbiler A/S 159"
+          }
+        ]
+      },
+      {
+        "id": "operator_39_monta_guidance",
+        "name": "Monta Guidance (1)",
+        "type": "geojson",
+        "features": true,
+        "features_host": "http://localhost:8080/api/rpc/monta_charging_points_bbox?xmin=<%= bbox[0] %>&ymin=<%= bbox[1] %>&xmax=<%= bbox[2] %>&ymax=<%= bbox[3] %>",
+        "features_dataType": "json",
+        "features_type": "Point",
+        "srs": "EPSG:4326",
+        "loadingstrategy": "bbox",
+        "computedProperties": [
+          {
+            "name": "statusColor",
+            "template": "<% if (available_count > 0) { %>rgba(40,167,69,1)<% } else if (occupied_count > 0) { %>rgba(220,53,69,1)<% } else { %>rgba(108,117,125,0.8)<% } %>"
+          },
+          {
+            "name": "statusLabel",
+            "template": "<% if (available_count > 0 || occupied_count > 0) { %><span style='color:#28a745;font-weight:600'><%= available_count %> ledig<%= available_count === 1 ? '' : 'e' %></span> · <span style='color:#dc3545'><%= occupied_count %> optaget</span><% if (out_of_service_count > 0) { %> · <span style='color:#999'><%= out_of_service_count %> ude af drift</span><% } %><% } else { %><span style='color:#999'>Status ukendt</span><% } %>"
+          },
+          {
+            "name": "connectorList",
+            "template": "<% var typeMap={'iec62196T2':'Type 2','chademo':'CHAdeMO','ccs1':'CCS1','ccs2':'CCS2','type1':'Type 1','iec62196T2Combo':'CCS2'}; if(connector_types && connector_types.length){ %><%= connector_types.map(function(t){return typeMap[t]||t}).join(', ') %><% } %>"
+          }
+        ],
+        "features_style": {
+          "symbol": "circle",
+          "radius": 8,
+          "fillcolor": "<%= statusColor %>",
+          "strokecolor": "rgba(255,255,255,0.9)",
+          "strokewidth": 2
+        },
+        "template_info": "<div class='widget-hoverbox-title'><%= site_name %></div><div class='widget-hoverbox-sub'><div><%= address %>, <%= postal_code %> <%= city %></div><% if (operator_name) { %><div>Operatør: <%= operator_name %></div><% } %><div><%= ac_count %> AC · <%= dc_count %> DC · max <%= max_power_kw %> kW</div><% if (connectorList) { %><div>Stik: <%= connectorList %></div><% } %><div style='margin-top:8px;font-size:1em'><%= statusLabel %></div><div style='color:#666;font-size:0.85em;margin-top:2px'><%= evse_count %> ladepunkter i alt</div><% if (last_seen_at) { %><div style='color:#999;font-size:0.8em;margin-top:4px'>Opdateret: <%= last_seen_at %></div><% } %></div>",
+        "layercontrol": true,
+        "visible": false,
+        "lazyload": true,
+        "prefilter": [
+          {
+            "name": "operator_name",
+            "op": "=",
+            "val": "Monta Guidance"
+          }
+        ]
+      },
+      {
+        "id": "operator_40_greentec_energy_a_s",
+        "name": "Greentec Energy A/S (1)",
+        "type": "geojson",
+        "features": true,
+        "features_host": "http://localhost:8080/api/rpc/monta_charging_points_bbox?xmin=<%= bbox[0] %>&ymin=<%= bbox[1] %>&xmax=<%= bbox[2] %>&ymax=<%= bbox[3] %>",
+        "features_dataType": "json",
+        "features_type": "Point",
+        "srs": "EPSG:4326",
+        "loadingstrategy": "bbox",
+        "computedProperties": [
+          {
+            "name": "statusColor",
+            "template": "<% if (available_count > 0) { %>rgba(40,167,69,1)<% } else if (occupied_count > 0) { %>rgba(220,53,69,1)<% } else { %>rgba(108,117,125,0.8)<% } %>"
+          },
+          {
+            "name": "statusLabel",
+            "template": "<% if (available_count > 0 || occupied_count > 0) { %><span style='color:#28a745;font-weight:600'><%= available_count %> ledig<%= available_count === 1 ? '' : 'e' %></span> · <span style='color:#dc3545'><%= occupied_count %> optaget</span><% if (out_of_service_count > 0) { %> · <span style='color:#999'><%= out_of_service_count %> ude af drift</span><% } %><% } else { %><span style='color:#999'>Status ukendt</span><% } %>"
+          },
+          {
+            "name": "connectorList",
+            "template": "<% var typeMap={'iec62196T2':'Type 2','chademo':'CHAdeMO','ccs1':'CCS1','ccs2':'CCS2','type1':'Type 1','iec62196T2Combo':'CCS2'}; if(connector_types && connector_types.length){ %><%= connector_types.map(function(t){return typeMap[t]||t}).join(', ') %><% } %>"
+          }
+        ],
+        "features_style": {
+          "symbol": "circle",
+          "radius": 8,
+          "fillcolor": "<%= statusColor %>",
+          "strokecolor": "rgba(255,255,255,0.9)",
+          "strokewidth": 2
+        },
+        "template_info": "<div class='widget-hoverbox-title'><%= site_name %></div><div class='widget-hoverbox-sub'><div><%= address %>, <%= postal_code %> <%= city %></div><% if (operator_name) { %><div>Operatør: <%= operator_name %></div><% } %><div><%= ac_count %> AC · <%= dc_count %> DC · max <%= max_power_kw %> kW</div><% if (connectorList) { %><div>Stik: <%= connectorList %></div><% } %><div style='margin-top:8px;font-size:1em'><%= statusLabel %></div><div style='color:#666;font-size:0.85em;margin-top:2px'><%= evse_count %> ladepunkter i alt</div><% if (last_seen_at) { %><div style='color:#999;font-size:0.8em;margin-top:4px'>Opdateret: <%= last_seen_at %></div><% } %></div>",
+        "layercontrol": true,
+        "visible": false,
+        "lazyload": true,
+        "prefilter": [
+          {
+            "name": "operator_name",
+            "op": "=",
+            "val": "Greentec Energy A/S"
+          }
+        ]
+      },
+      {
+        "id": "operator_41_qa_demo",
+        "name": "QA Demo (1)",
+        "type": "geojson",
+        "features": true,
+        "features_host": "http://localhost:8080/api/rpc/monta_charging_points_bbox?xmin=<%= bbox[0] %>&ymin=<%= bbox[1] %>&xmax=<%= bbox[2] %>&ymax=<%= bbox[3] %>",
+        "features_dataType": "json",
+        "features_type": "Point",
+        "srs": "EPSG:4326",
+        "loadingstrategy": "bbox",
+        "computedProperties": [
+          {
+            "name": "statusColor",
+            "template": "<% if (available_count > 0) { %>rgba(40,167,69,1)<% } else if (occupied_count > 0) { %>rgba(220,53,69,1)<% } else { %>rgba(108,117,125,0.8)<% } %>"
+          },
+          {
+            "name": "statusLabel",
+            "template": "<% if (available_count > 0 || occupied_count > 0) { %><span style='color:#28a745;font-weight:600'><%= available_count %> ledig<%= available_count === 1 ? '' : 'e' %></span> · <span style='color:#dc3545'><%= occupied_count %> optaget</span><% if (out_of_service_count > 0) { %> · <span style='color:#999'><%= out_of_service_count %> ude af drift</span><% } %><% } else { %><span style='color:#999'>Status ukendt</span><% } %>"
+          },
+          {
+            "name": "connectorList",
+            "template": "<% var typeMap={'iec62196T2':'Type 2','chademo':'CHAdeMO','ccs1':'CCS1','ccs2':'CCS2','type1':'Type 1','iec62196T2Combo':'CCS2'}; if(connector_types && connector_types.length){ %><%= connector_types.map(function(t){return typeMap[t]||t}).join(', ') %><% } %>"
+          }
+        ],
+        "features_style": {
+          "symbol": "circle",
+          "radius": 8,
+          "fillcolor": "<%= statusColor %>",
+          "strokecolor": "rgba(255,255,255,0.9)",
+          "strokewidth": 2
+        },
+        "template_info": "<div class='widget-hoverbox-title'><%= site_name %></div><div class='widget-hoverbox-sub'><div><%= address %>, <%= postal_code %> <%= city %></div><% if (operator_name) { %><div>Operatør: <%= operator_name %></div><% } %><div><%= ac_count %> AC · <%= dc_count %> DC · max <%= max_power_kw %> kW</div><% if (connectorList) { %><div>Stik: <%= connectorList %></div><% } %><div style='margin-top:8px;font-size:1em'><%= statusLabel %></div><div style='color:#666;font-size:0.85em;margin-top:2px'><%= evse_count %> ladepunkter i alt</div><% if (last_seen_at) { %><div style='color:#999;font-size:0.8em;margin-top:4px'>Opdateret: <%= last_seen_at %></div><% } %></div>",
+        "layercontrol": true,
+        "visible": false,
+        "lazyload": true,
+        "prefilter": [
+          {
+            "name": "operator_name",
+            "op": "=",
+            "val": "QA Demo"
+          }
+        ]
+      },
+      {
+        "id": "operator_42_cr_demodemo_375",
+        "name": "CR-demodemo #375 (1)",
+        "type": "geojson",
+        "features": true,
+        "features_host": "http://localhost:8080/api/rpc/monta_charging_points_bbox?xmin=<%= bbox[0] %>&ymin=<%= bbox[1] %>&xmax=<%= bbox[2] %>&ymax=<%= bbox[3] %>",
+        "features_dataType": "json",
+        "features_type": "Point",
+        "srs": "EPSG:4326",
+        "loadingstrategy": "bbox",
+        "computedProperties": [
+          {
+            "name": "statusColor",
+            "template": "<% if (available_count > 0) { %>rgba(40,167,69,1)<% } else if (occupied_count > 0) { %>rgba(220,53,69,1)<% } else { %>rgba(108,117,125,0.8)<% } %>"
+          },
+          {
+            "name": "statusLabel",
+            "template": "<% if (available_count > 0 || occupied_count > 0) { %><span style='color:#28a745;font-weight:600'><%= available_count %> ledig<%= available_count === 1 ? '' : 'e' %></span> · <span style='color:#dc3545'><%= occupied_count %> optaget</span><% if (out_of_service_count > 0) { %> · <span style='color:#999'><%= out_of_service_count %> ude af drift</span><% } %><% } else { %><span style='color:#999'>Status ukendt</span><% } %>"
+          },
+          {
+            "name": "connectorList",
+            "template": "<% var typeMap={'iec62196T2':'Type 2','chademo':'CHAdeMO','ccs1':'CCS1','ccs2':'CCS2','type1':'Type 1','iec62196T2Combo':'CCS2'}; if(connector_types && connector_types.length){ %><%= connector_types.map(function(t){return typeMap[t]||t}).join(', ') %><% } %>"
+          }
+        ],
+        "features_style": {
+          "symbol": "circle",
+          "radius": 8,
+          "fillcolor": "<%= statusColor %>",
+          "strokecolor": "rgba(255,255,255,0.9)",
+          "strokewidth": 2
+        },
+        "template_info": "<div class='widget-hoverbox-title'><%= site_name %></div><div class='widget-hoverbox-sub'><div><%= address %>, <%= postal_code %> <%= city %></div><% if (operator_name) { %><div>Operatør: <%= operator_name %></div><% } %><div><%= ac_count %> AC · <%= dc_count %> DC · max <%= max_power_kw %> kW</div><% if (connectorList) { %><div>Stik: <%= connectorList %></div><% } %><div style='margin-top:8px;font-size:1em'><%= statusLabel %></div><div style='color:#666;font-size:0.85em;margin-top:2px'><%= evse_count %> ladepunkter i alt</div><% if (last_seen_at) { %><div style='color:#999;font-size:0.8em;margin-top:4px'>Opdateret: <%= last_seen_at %></div><% } %></div>",
+        "layercontrol": true,
+        "visible": false,
+        "lazyload": true,
+        "prefilter": [
+          {
+            "name": "operator_name",
+            "op": "=",
+            "val": "CR-demodemo #375"
+          }
+        ]
+      },
+      {
+        "id": "operator_43_henning_mortensen_a_s",
+        "name": "Henning Mortensen A/S (1)",
+        "type": "geojson",
+        "features": true,
+        "features_host": "http://localhost:8080/api/rpc/monta_charging_points_bbox?xmin=<%= bbox[0] %>&ymin=<%= bbox[1] %>&xmax=<%= bbox[2] %>&ymax=<%= bbox[3] %>",
+        "features_dataType": "json",
+        "features_type": "Point",
+        "srs": "EPSG:4326",
+        "loadingstrategy": "bbox",
+        "computedProperties": [
+          {
+            "name": "statusColor",
+            "template": "<% if (available_count > 0) { %>rgba(40,167,69,1)<% } else if (occupied_count > 0) { %>rgba(220,53,69,1)<% } else { %>rgba(108,117,125,0.8)<% } %>"
+          },
+          {
+            "name": "statusLabel",
+            "template": "<% if (available_count > 0 || occupied_count > 0) { %><span style='color:#28a745;font-weight:600'><%= available_count %> ledig<%= available_count === 1 ? '' : 'e' %></span> · <span style='color:#dc3545'><%= occupied_count %> optaget</span><% if (out_of_service_count > 0) { %> · <span style='color:#999'><%= out_of_service_count %> ude af drift</span><% } %><% } else { %><span style='color:#999'>Status ukendt</span><% } %>"
+          },
+          {
+            "name": "connectorList",
+            "template": "<% var typeMap={'iec62196T2':'Type 2','chademo':'CHAdeMO','ccs1':'CCS1','ccs2':'CCS2','type1':'Type 1','iec62196T2Combo':'CCS2'}; if(connector_types && connector_types.length){ %><%= connector_types.map(function(t){return typeMap[t]||t}).join(', ') %><% } %>"
+          }
+        ],
+        "features_style": {
+          "symbol": "circle",
+          "radius": 8,
+          "fillcolor": "<%= statusColor %>",
+          "strokecolor": "rgba(255,255,255,0.9)",
+          "strokewidth": 2
+        },
+        "template_info": "<div class='widget-hoverbox-title'><%= site_name %></div><div class='widget-hoverbox-sub'><div><%= address %>, <%= postal_code %> <%= city %></div><% if (operator_name) { %><div>Operatør: <%= operator_name %></div><% } %><div><%= ac_count %> AC · <%= dc_count %> DC · max <%= max_power_kw %> kW</div><% if (connectorList) { %><div>Stik: <%= connectorList %></div><% } %><div style='margin-top:8px;font-size:1em'><%= statusLabel %></div><div style='color:#666;font-size:0.85em;margin-top:2px'><%= evse_count %> ladepunkter i alt</div><% if (last_seen_at) { %><div style='color:#999;font-size:0.8em;margin-top:4px'>Opdateret: <%= last_seen_at %></div><% } %></div>",
+        "layercontrol": true,
+        "visible": false,
+        "lazyload": true,
+        "prefilter": [
+          {
+            "name": "operator_name",
+            "op": "=",
+            "val": "Henning Mortensen A/S"
+          }
+        ]
+      },
+      {
+        "id": "operator_44_elite_energy_savings_aps",
+        "name": "Elite Energy Savings ApS (1)",
+        "type": "geojson",
+        "features": true,
+        "features_host": "http://localhost:8080/api/rpc/monta_charging_points_bbox?xmin=<%= bbox[0] %>&ymin=<%= bbox[1] %>&xmax=<%= bbox[2] %>&ymax=<%= bbox[3] %>",
+        "features_dataType": "json",
+        "features_type": "Point",
+        "srs": "EPSG:4326",
+        "loadingstrategy": "bbox",
+        "computedProperties": [
+          {
+            "name": "statusColor",
+            "template": "<% if (available_count > 0) { %>rgba(40,167,69,1)<% } else if (occupied_count > 0) { %>rgba(220,53,69,1)<% } else { %>rgba(108,117,125,0.8)<% } %>"
+          },
+          {
+            "name": "statusLabel",
+            "template": "<% if (available_count > 0 || occupied_count > 0) { %><span style='color:#28a745;font-weight:600'><%= available_count %> ledig<%= available_count === 1 ? '' : 'e' %></span> · <span style='color:#dc3545'><%= occupied_count %> optaget</span><% if (out_of_service_count > 0) { %> · <span style='color:#999'><%= out_of_service_count %> ude af drift</span><% } %><% } else { %><span style='color:#999'>Status ukendt</span><% } %>"
+          },
+          {
+            "name": "connectorList",
+            "template": "<% var typeMap={'iec62196T2':'Type 2','chademo':'CHAdeMO','ccs1':'CCS1','ccs2':'CCS2','type1':'Type 1','iec62196T2Combo':'CCS2'}; if(connector_types && connector_types.length){ %><%= connector_types.map(function(t){return typeMap[t]||t}).join(', ') %><% } %>"
+          }
+        ],
+        "features_style": {
+          "symbol": "circle",
+          "radius": 8,
+          "fillcolor": "<%= statusColor %>",
+          "strokecolor": "rgba(255,255,255,0.9)",
+          "strokewidth": 2
+        },
+        "template_info": "<div class='widget-hoverbox-title'><%= site_name %></div><div class='widget-hoverbox-sub'><div><%= address %>, <%= postal_code %> <%= city %></div><% if (operator_name) { %><div>Operatør: <%= operator_name %></div><% } %><div><%= ac_count %> AC · <%= dc_count %> DC · max <%= max_power_kw %> kW</div><% if (connectorList) { %><div>Stik: <%= connectorList %></div><% } %><div style='margin-top:8px;font-size:1em'><%= statusLabel %></div><div style='color:#666;font-size:0.85em;margin-top:2px'><%= evse_count %> ladepunkter i alt</div><% if (last_seen_at) { %><div style='color:#999;font-size:0.8em;margin-top:4px'>Opdateret: <%= last_seen_at %></div><% } %></div>",
+        "layercontrol": true,
+        "visible": false,
+        "lazyload": true,
+        "prefilter": [
+          {
+            "name": "operator_name",
+            "op": "=",
+            "val": "Elite Energy Savings ApS"
+          }
+        ]
+      },
+      {
+        "id": "operator_45_samstr_m_a_s",
+        "name": "Samstrøm A/S (1)",
+        "type": "geojson",
+        "features": true,
+        "features_host": "http://localhost:8080/api/rpc/monta_charging_points_bbox?xmin=<%= bbox[0] %>&ymin=<%= bbox[1] %>&xmax=<%= bbox[2] %>&ymax=<%= bbox[3] %>",
+        "features_dataType": "json",
+        "features_type": "Point",
+        "srs": "EPSG:4326",
+        "loadingstrategy": "bbox",
+        "computedProperties": [
+          {
+            "name": "statusColor",
+            "template": "<% if (available_count > 0) { %>rgba(40,167,69,1)<% } else if (occupied_count > 0) { %>rgba(220,53,69,1)<% } else { %>rgba(108,117,125,0.8)<% } %>"
+          },
+          {
+            "name": "statusLabel",
+            "template": "<% if (available_count > 0 || occupied_count > 0) { %><span style='color:#28a745;font-weight:600'><%= available_count %> ledig<%= available_count === 1 ? '' : 'e' %></span> · <span style='color:#dc3545'><%= occupied_count %> optaget</span><% if (out_of_service_count > 0) { %> · <span style='color:#999'><%= out_of_service_count %> ude af drift</span><% } %><% } else { %><span style='color:#999'>Status ukendt</span><% } %>"
+          },
+          {
+            "name": "connectorList",
+            "template": "<% var typeMap={'iec62196T2':'Type 2','chademo':'CHAdeMO','ccs1':'CCS1','ccs2':'CCS2','type1':'Type 1','iec62196T2Combo':'CCS2'}; if(connector_types && connector_types.length){ %><%= connector_types.map(function(t){return typeMap[t]||t}).join(', ') %><% } %>"
+          }
+        ],
+        "features_style": {
+          "symbol": "circle",
+          "radius": 8,
+          "fillcolor": "<%= statusColor %>",
+          "strokecolor": "rgba(255,255,255,0.9)",
+          "strokewidth": 2
+        },
+        "template_info": "<div class='widget-hoverbox-title'><%= site_name %></div><div class='widget-hoverbox-sub'><div><%= address %>, <%= postal_code %> <%= city %></div><% if (operator_name) { %><div>Operatør: <%= operator_name %></div><% } %><div><%= ac_count %> AC · <%= dc_count %> DC · max <%= max_power_kw %> kW</div><% if (connectorList) { %><div>Stik: <%= connectorList %></div><% } %><div style='margin-top:8px;font-size:1em'><%= statusLabel %></div><div style='color:#666;font-size:0.85em;margin-top:2px'><%= evse_count %> ladepunkter i alt</div><% if (last_seen_at) { %><div style='color:#999;font-size:0.8em;margin-top:4px'>Opdateret: <%= last_seen_at %></div><% } %></div>",
+        "layercontrol": true,
+        "visible": false,
+        "lazyload": true,
+        "prefilter": [
+          {
+            "name": "operator_name",
+            "op": "=",
+            "val": "Samstrøm A/S"
+          }
+        ]
+      }
+    ],
+    "controls": [
+      {
+        "search": {
+          "driver": [
+            {
+              "type": "dawa",
+              "options": {}
+            }
+          ]
+        }
+      },
+      {
+        "info": {
+          "eventtype": "click",
+          "closeButton": true
+        }
+      },
+      {
+        "layerswitch2": {
+          "position": "left",
+          "showlegend": false,
+          "showHeader": true,
+          "expanded": true,
+          "menuButtons": {
+            "search": true,
+            "clear": true,
+            "expandAll": true
+          },
+          "groups": [
+            {
+              "title": "Operatør",
+              "type": "checkbox",
+              "expanded": true,
+              "selectAll": false,
+              "layers": [
+                "ladestandere",
+                "operator_01_norlys",
+                "operator_02_ewii",
+                "operator_03_nortec_a_s",
+                "operator_04_nrgi_erhverv",
+                "operator_05_uno_x_mobility_danmark_a_s",
+                "operator_06_ecdrive",
+                "operator_07_apcoa_parking_danmark_a_s",
+                "operator_08_legoland_aps",
+                "operator_09_ampgo_aps",
+                "operator_10_energi_fyn",
+                "operator_11_takecharge_aps",
+                "operator_12_stella_energy",
+                "operator_13_monta",
+                "operator_14_strandby_el_teknik_a_s",
+                "operator_15_sef_energi",
+                "operator_16_gardian",
+                "operator_17_str_mlinet_a_s",
+                "operator_18_hessel_power",
+                "operator_19_go_energi_a_s",
+                "operator_20_vs_automatic_a_s",
+                "operator_21_greenier",
+                "operator_22_el_service_nord_aps",
+                "operator_23_ewii_b2b",
+                "operator_24_bornholms_energi_forsyning",
+                "operator_25_outscale_installer",
+                "operator_26_el_garden_saltum_aps",
+                "operator_27_holmriis_ebeltoft_el_installation_a_s",
+                "operator_28_el_dam_aps",
+                "operator_29_mth_biler_a_s_192",
+                "operator_30_blavand_el_teknik",
+                "operator_31_monta_denmark",
+                "operator_32_sts_biler_a_s_107",
+                "operator_33_bp_soendergaard",
+                "operator_34_knud_j_rgensen_el_aps",
+                "operator_35_monta_group",
+                "operator_36_jvs_a_s",
+                "operator_37_qa_monta_test_only",
+                "operator_38_sdkbiler_a_s_159",
+                "operator_39_monta_guidance",
+                "operator_40_greentec_energy_a_s",
+                "operator_41_qa_demo",
+                "operator_42_cr_demodemo_375",
+                "operator_43_henning_mortensen_a_s",
+                "operator_44_elite_energy_savings_aps",
+                "operator_45_samstr_m_a_s"
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "fullscreen": {}
+      }
+    ]
+  }
+}

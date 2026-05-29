@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ladestandere — Monta AFIR</title>
+  <script src="https://widget.cdn.septima.dk/latest/widgetapi.js"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { width: 100%; height: 100%; overflow: hidden; }
+    #widget-map,
+    #widget-container,
+    #widget-container > iframe {
+      position: fixed !important;
+      top: 0 !important; left: 0 !important;
+      width: 100% !important;
+      height: 100% !important;
+    }
+  </style>
+</head>
+<body>
+  <div id="widget-map">
+    <div id="widget-container" data-widget-url="ladestander.json"></div>
+  </div>
+  <script>
+    const api = new WidgetAPI(document.getElementById('widget-container'));
+
+    // Genindlæs kortlaget når baggrunds-pollet har afsluttet sin første runde,
+    // og derefter hvert 15. minut i takt med at serveren opdaterer DB.
+    let lastReloadTs = 0;
+
+    setInterval(async () => {
+      try {
+        const r = await fetch('/api/status-ready').then(r => r.json());
+        if (r.ready && r.ts > lastReloadTs) {
+          lastReloadTs = r.ts;
+          api.reloadLayer('ladestandere');
+          console.log('[status] Kortlag genindlæst med ny status fra DB');
+        }
+      } catch { /* ignore network errors */ }
+    }, 5000);
+  </script>
+</body>
+</html>

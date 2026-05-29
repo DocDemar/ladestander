@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Belastningshistorik — Ladestandere</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: system-ui, -apple-system, sans-serif; font-size: 13px; background: #f0f2f5; color: #333; }
+
+    header {
+      background: #212529; color: #fff; padding: 12px 20px;
+      display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+      position: sticky; top: 0; z-index: 100;
+    }
+    header h1 { font-size: 16px; font-weight: 600; }
+    header a { color: #adb5bd; text-decoration: none; font-size: 12px; }
+    header a:hover { color: #fff; }
+    select {
+      padding: 5px 10px; border-radius: 4px; border: 1px solid #495057;
+      background: #343a40; color: #fff; font-size: 13px; cursor: pointer;
+    }
+    #statusMsg { color: #adb5bd; font-size: 12px; margin-left: auto; }
+
+    #container { padding: 16px; }
+
+    .legend {
+      display: flex; align-items: center; gap: 10px; padding: 10px 0 14px;
+      font-size: 12px; color: #666;
+    }
+    .legend-bar {
+      height: 14px; width: 180px; border-radius: 3px;
+      background: linear-gradient(to right, hsl(220,80%,95%), hsl(220,80%,20%));
+      border: 1px solid #dee2e6;
+    }
+    .legend-nodata { width: 14px; height: 14px; background: #e9ecef; border: 1px solid #dee2e6; border-radius: 2px; }
+
+    .heatmap-wrap { overflow-x: auto; }
+    .heatmap {
+      display: inline-table; min-width: 100%; border-radius: 6px;
+      border: 1px solid #dee2e6; border-collapse: collapse; background: #fff;
+    }
+
+    .hm-head th {
+      background: #343a40; color: #fff; font-size: 11px; font-weight: 600;
+      padding: 6px 4px; text-align: center; white-space: nowrap;
+      border-right: 1px solid #495057;
+    }
+    .hm-head th.th-name { text-align: left; padding: 6px 10px; min-width: 200px; }
+    .hm-head th.th-avg { border-left: 2px solid #495057; }
+
+    .hm-row td { border-bottom: 1px solid #f0f0f0; }
+    .hm-row:last-child td { border-bottom: none; }
+    .hm-row:hover td { filter: brightness(0.94); }
+
+    td.td-name {
+      padding: 3px 10px; font-size: 12px; line-height: 1.4;
+      border-right: 1px solid #dee2e6; max-width: 220px;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    td.td-cell {
+      width: 30px; height: 26px; position: relative;
+      border-right: 1px solid rgba(0,0,0,0.04);
+    }
+    td.td-avg {
+      padding: 3px 8px; text-align: center; font-size: 12px; font-weight: 600;
+      border-left: 2px solid #dee2e6; background: #f8f9fa; white-space: nowrap;
+    }
+
+    /* Tooltip via CSS */
+    td.td-cell[data-tip]:hover::after {
+      content: attr(data-tip);
+      position: fixed;
+      background: rgba(0,0,0,0.85); color: #fff;
+      padding: 5px 9px; border-radius: 5px; font-size: 11px;
+      white-space: nowrap; z-index: 200; pointer-events: none;
+      transform: translate(-50%, -130%);
+      left: var(--tx, 50%); top: var(--ty, 50%);
+    }
+
+    #empty { padding: 48px; text-align: center; color: #999; font-size: 14px; }
+    .loading { padding: 48px; text-align: center; color: #666; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Belastningshistorik</h1>
+  <a href="/ladestander.html">← Kortvisning</a>
+  <select id="opSelect"><option value="">Indlæser operatører…</option></select>
+  <span id="statusMsg"></span>
+</header>
+
+<div id="container">
+  <div class="legend">
+    <span>0% optaget</span>
+    <div class="legend-bar"></div>
+    <span>100% optaget</span>
+    <span style="width:24px"></span>
+    <div class="legend-nodata"></div>
+    <span>Ingen data</span>
+  </div>
+  <div class="heatmap-wrap">
+    <p id="empty">Vælg en operatør for at se belastningshistorik</p>
+  </div>
+</div>
+
+<script>
+const HOURS = Array.from({ length: 24 }, (_, i) => String(i).padStart(2, '0'));
+
+function cellBg(pct) {
+  if (pct === null || pct === undefined) return '#e9ecef';
+  const l = 95 - pct * 0.75;
+  return `hsl(220,80%,${l}%)`;
+}
+
+async function fetchJson(url) {
+  const r = await fetch(url);
+  if (!r.ok) throw new Error('HTTP ' + r.status);
+  const data = await r.json();
+  // PostgREST kan returnere FeatureCollection eller array
+  return Array.isArray(data) ? data : (data.features?.map(f => f.properties) ?? []);
+}
+
+async function loadOperators() {
+  try {
+    const rows = await fetchJson('/api/operators_with_history?order=operator_name');
+    const sel = document.getElementById('opSelect');
+    sel.innerHTML = '<option value="">— Vælg operatør —</option>';
+    rows.forEach(r => {
+      const o = document.createElement('option');
+      o.value = r.operator_name;
+      o.textContent = r.operator_name;
+      sel.appendChild(o);
+    });
+  } catch (e) {
+    document.getElementById('opSelect').innerHTML = `<option value="">Fejl: ${e.message}</option>`;
+  }
+}
+
+async function loadData(opName) {
+  const msg = document.getElementById('statusMsg');
+  const wrap = document.querySelector('.heatmap-wrap');
+  msg.textContent = 'Henter…';
+  wrap.innerHTML = '<p class="loading">Henter data…</p>';
+
+  try {
+    const url = '/api/rpc/site_hourly_occupancy' + (opName ? '?op_name=' + encodeURIComponent(opName) : '');
+    const rows = await fetchJson(url);
+
+    if (!rows.length) {
+      wrap.innerHTML = '<p id="empty">Ingen historikdata for denne operatør endnu.</p>';
+      msg.textContent = '';
+      return;
+    }
+
+    // Pivot: site_id → { name, operator, hours: { 0: {pct, n}, ... } }
+    const sites = {};
+    rows.forEach(r => {
+      if (!sites[r.site_id]) {
+        sites[r.site_id] = { name: r.site_name || r.site_id, operator: r.operator_name, hours: {} };
+      }
+      sites[r.site_id].hours[r.hour_of_day] = { pct: r.pct_occupied, n: Number(r.total_count) };
+    });
+
+    // Sort by avg pct_occupied descending
+    const sorted = Object.entries(sites).sort(([, a], [, b]) => {
+      const avg = o => {
+        const vals = Object.values(o.hours).map(h => h.pct || 0);
+        return vals.length ? vals.reduce((s, v) => s + v, 0) / vals.length : 0;
+      };
+      return avg(b) - avg(a);
+    });
+
+    // Build table
+    const tbl = document.createElement('table');
+    tbl.className = 'heatmap';
+
+    // Header
+    const thead = tbl.createTHead();
+    const hRow = thead.insertRow();
+    hRow.className = 'hm-head';
+    const thName = document.createElement('th');
+    thName.className = 'th-name';
+    thName.textContent = 'Ladestation';
+    hRow.appendChild(thName);
+    HOURS.forEach(h => {
+      const th = document.createElement('th');
+      th.textContent = h;
+      hRow.appendChild(th);
+    });
+    const thAvg = document.createElement('th');
+    thAvg.className = 'th-avg';
+    thAvg.textContent = 'Ø%';
+    hRow.appendChild(thAvg);
+
+    // Body
+    const tbody = tbl.createTBody();
+    sorted.forEach(([siteId, site]) => {
+      const row = tbody.insertRow();
+      row.className = 'hm-row';
+
+      // Name
+      const tdName = row.insertCell();
+      tdName.className = 'td-name';
+      tdName.textContent = site.name;
+      tdName.title = site.name + (site.operator ? ' · ' + site.operator : '');
+
+      // Hour cells
+      let pctSum = 0, pctCount = 0;
+      for (let h = 0; h < 24; h++) {
+        const td = row.insertCell();
+        td.className = 'td-cell';
+        const d = site.hours[h];
+        if (d != null) {
+          td.style.background = cellBg(d.pct);
+          td.dataset.tip = `Kl. ${String(h).padStart(2, '0')}: ${d.pct}% optaget (${d.n} obs.)`;
+          pctSum += d.pct;
+          pctCount++;
+        } else {
+          td.style.background = '#e9ecef';
+          td.dataset.tip = `Kl. ${String(h).padStart(2, '0')}: ingen data`;
+        }
+      }
+
+      // Avg
+      const tdAvg = row.insertCell();
+      tdAvg.className = 'td-avg';
+      tdAvg.textContent = pctCount ? Math.round(pctSum / pctCount) + '%' : '—';
+
+      tbody.appendChild(row);
+    });
+
+    wrap.innerHTML = '';
+    wrap.appendChild(tbl);
+    msg.textContent = `${sorted.length} stationer · ${rows.length} datapunkter`;
+  } catch (e) {
+    wrap.innerHTML = `<p id="empty" style="color:#c0392b">Fejl: ${e.message}</p>`;
+    msg.textContent = '';
+  }
+}
+
+// Tooltip: position under cursor
+document.addEventListener('mousemove', e => {
+  document.documentElement.style.setProperty('--tx', e.clientX + 'px');
+  document.documentElement.style.setProperty('--ty', e.clientY + 'px');
+});
+
+document.getElementById('opSelect').addEventListener('change', e => loadData(e.target.value));
+
+loadOperators().then(() => {
+  const sel = document.getElementById('opSelect');
+  if (sel.options.length > 1) {
+    sel.selectedIndex = 1;
+    loadData(sel.value);
+  }
+});
+</script>
+</body>
+</html>

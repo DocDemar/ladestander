@@ -1,0 +1,47 @@
+{
+  "map": {
+    "fullscreen": true,
+    "view": { "zoomLevel": 7, "x": 724406, "y": 6175994 },
+    "layer": [
+      { "namedlayer": "#osm" },
+      {
+        "id": "ladestandere",
+        "name": "Ladestandere",
+        "type": "geojson",
+        "features": true,
+        "features_host": "http://localhost:8080/api/rpc/charging_stations_bbox?xmin=<%= bbox[0] %>&ymin=<%= bbox[1] %>&xmax=<%= bbox[2] %>&ymax=<%= bbox[3] %>",
+        "features_dataType": "json",
+        "features_type": "Point",
+        "srs": "EPSG:4326",
+        "loadingstrategy": "bbox",
+        "computedProperties": [
+          {
+            "name": "statusIconColor",
+            "template": "<% if (available_count > 0) { %>green<% } else if (occupied_count > 0) { %>red<% } else { %>grey<% } %>"
+          },
+          {
+            "name": "statusLabel",
+            "template": "<% if (available_count > 0 || occupied_count > 0) { %><span style='color:#28a745;font-weight:600'><%= available_count %> ledig<%= available_count === 1 ? '' : 'e' %></span> · <span style='color:#dc3545'><%= occupied_count %> optaget</span><% if (out_of_service_count > 0) { %> · <span style='color:#999'><%= out_of_service_count %> ude af drift</span><% } %><% } else { %><span style='color:#999'>Status ukendt</span><% } %>"
+          },
+          {
+            "name": "connectorList",
+            "template": "<% var typeMap={'iec62196T2':'Type 2','chademo':'CHAdeMO','ccs1':'CCS1','ccs2':'CCS2','type1':'Type 1','iec62196T2Combo':'CCS2'}; if(connector_types && connector_types.length){ %><%= connector_types.map(function(t){return typeMap[t]||t}).join(', ') %><% } %>"
+          }
+        ],
+        "features_style": {
+          "icon": "/icons/ladestander-<%= statusIconColor %>.svg",
+          "icon_selected": "/icons/ladestander-<%= statusIconColor %>.svg",
+          "scale": 1,
+          "scale_selected": 1.2
+        },
+        "template_info": "<div class='widget-hoverbox-title'><%= site_name %></div><div class='widget-hoverbox-sub'><div><%= address %>, <%= postal_code %> <%= city %></div><% if (operator_name) { %><div>Operatør: <%= operator_name %></div><% } %><div><%= ac_count %> AC · <%= dc_count %> DC · max <%= max_power_kw %> kW</div><% if (connectorList) { %><div>Stik: <%= connectorList %></div><% } %><div style='margin-top:8px;font-size:1em'><%= statusLabel %></div><div style='color:#666;font-size:0.85em;margin-top:2px'><%= evse_count %> ladepunkter i alt</div><% if (last_seen_at) { %><div style='color:#999;font-size:0.8em;margin-top:4px'>Opdateret: <%= last_seen_at %></div><% } %></div>"
+      }
+    ],
+    "controls": [
+      {
+        "info": { "disable": false, "closeButton": true, "eventtype": "click" },
+        "fullscreen": { "disable": false }
+      }
+    ]
+  }
+}
